@@ -967,3 +967,15 @@ select,.search-box input{
     flex:0 0 auto;
   }
 }
+
+
+/* ===== Gender tag display ===== */
+.gender-tags{
+  margin:8px 0 6px;
+}
+.gender-tag{
+  border-color:#cfc8ff;
+  background:#f0edff;
+  color:#5d3fb7;
+  font-weight:700;
+}

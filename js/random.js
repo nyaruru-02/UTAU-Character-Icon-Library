@@ -17,6 +17,7 @@ async function initRandomPage(){
     name: firstValue(row, ['name','Name','displayName','display_name','表示名','名前','キャラクター名']) || '',
     kana: firstValue(row, ['kana','Kana','reading','yomi','読み','ひらがな','かな']) || '',
     romaji: firstValue(row, ['romaji','Romaji','roman','romanji','ローマ字','ヘボン式']) || '',
+    gender: normalizeTextValue(firstValue(row, ['gender','Gender','genderTag','gender_tag','GenderTag','sex','Sex','性別','性別タグ'])) || '',
     icon: firstValue(row, ['icon','Icon','image','Image','画像','アイコン','アイコン画像']) || '',
     url: firstValue(row, ['url','URL','link','Link','リンク']) || '',
     tags: collectTagsFromFields(row, ['tags','tag','Tags','Tag','characterTags','character_tags','normalTags','normal_tags','タグ','通常タグ']),
@@ -43,8 +44,9 @@ function drawRandom(){
         <h2 class="character-name">${escapeHtml(c.name)}</h2>
         <p class="reading1">${escapeHtml(c.kana)}</p>
         <p class="reading2">${escapeHtml(c.romaji)}</p>
+        ${c.gender ? `<div class="tags gender-tags"><span class="tag gender-tag">${escapeHtml(c.gender)}</span></div>` : ''}
         ${c.workTags.length ? `<div class="tags work-tags">${c.workTags.map(t => `<a class="tag work-tag" href="./?work=${encodeURIComponent(t)}">${escapeHtml(t)}</a>`).join('')}</div>` : ''}
-        <div class="tags">${c.tags.map(t => `<a class="tag" href="./?tag=${encodeURIComponent(t)}">${escapeHtml(t)}</a>`).join('')}</div>
+        ${c.tags.length ? `<div class="tags">${c.tags.map(t => `<a class="tag" href="./?tag=${encodeURIComponent(t)}">${escapeHtml(t)}</a>`).join('')}</div>` : ''}
         ${c.url ? `<a class="detail-link" href="${escapeAttr(c.url)}" target="_blank" rel="noopener">管理サイトはこちら</a>` : ''}
       </div>
     </article>`;
@@ -58,6 +60,17 @@ function firstValue(row, keys){
     }
   }
   return '';
+}
+
+function normalizeTextValue(value){
+  if(value === undefined || value === null) return '';
+  if(Array.isArray(value)){
+    return value.map(normalizeTextValue).find(Boolean) || '';
+  }
+  if(typeof value === 'object'){
+    return Object.values(value).map(normalizeTextValue).find(Boolean) || '';
+  }
+  return String(value).trim();
 }
 
 function collectTagsFromFields(row, keys){
