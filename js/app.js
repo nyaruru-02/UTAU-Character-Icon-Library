@@ -52,6 +52,7 @@ function normalizeCharacter(row, index){
     name: firstValue(row, ['name','Name','displayName','display_name','表示名','名前','キャラクター名']) || '',
     kana: firstValue(row, ['kana','Kana','reading','yomi','読み','ひらがな','かな']) || '',
     romaji: firstValue(row, ['romaji','Romaji','roman','romanji','ローマ字','ヘボン式']) || '',
+    gender: firstValue(row, ['gender','Gender','sex','Sex','性別']) || '',
     icon: firstValue(row, ['icon','Icon','image','Image','画像','アイコン','アイコン画像']) || '',
     url: firstValue(row, ['url','URL','link','Link','リンク']) || '',
     tags: collectTagsFromFields(row, ['tags','tag','Tags','Tag','characterTags','character_tags','normalTags','normal_tags','タグ','通常タグ']),
@@ -159,7 +160,7 @@ function renderByUrl(){
   // 例：タグで絞り込み中に「か」を押した場合、該当タグ内の「か行」だけを表示する。
   if(q){
     const key = q.toLowerCase();
-    list = list.filter(c => [c.name,c.kana,c.romaji,...c.tags,...c.workTags].some(v => String(v).toLowerCase().includes(key)));
+    list = list.filter(c => [c.name,c.kana,c.romaji,c.gender,...c.tags,...c.workTags].some(v => String(v).toLowerCase().includes(key)));
     titleParts.push(`「${escapeHtml(q)}」`);
     crumbParts.push('検索');
   }
@@ -257,6 +258,7 @@ function renderCharacters(list){
         <h3 class="character-name">${escapeHtml(c.name)}</h3>
         <p class="reading1">${escapeHtml(c.kana)}</p>
         <p class="reading2">${escapeHtml(c.romaji)}</p>
+        ${c.gender ? `<p class="character-gender">${escapeHtml(c.gender)}</p>` : ''}
         ${c.workTags.length ? `<div class="tags work-tags">${c.workTags.map(t => `<a class="tag work-tag" href="?work=${encodeURIComponent(t)}">${escapeHtml(t)}</a>`).join('')}</div>` : ''}
         <div class="tags">${c.tags.map(t => `<a class="tag" href="?tag=${encodeURIComponent(t)}">${escapeHtml(t)}</a>`).join('')}</div>
         ${c.url ? `<a class="detail-link" href="${escapeAttr(c.url)}" target="_blank" rel="noopener">管理サイトはこちら</a>` : ''}
@@ -357,7 +359,7 @@ function getListBeforeKanaFilter(){
 
   if(q){
     const key = q.toLowerCase();
-    list = list.filter(c => [c.name,c.kana,c.romaji,...c.tags,...c.workTags].some(v => String(v).toLowerCase().includes(key)));
+    list = list.filter(c => [c.name,c.kana,c.romaji,c.gender,...c.tags,...c.workTags].some(v => String(v).toLowerCase().includes(key)));
   }
 
   if(tag){

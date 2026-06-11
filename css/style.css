@@ -334,6 +334,26 @@ select,.search-box input{
   font-size:12px
 }
 
+
+.character-gender{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin:8px 0 10px;
+  padding:4px 9px;
+  border-radius:999px;
+  background:#dee0fb;
+  color:#5d3fb7;
+  font-size:12px;
+  font-weight:700;
+}
+
+.character-gender span{
+  color:#5d3fb7;
+  font-size:11px;
+  letter-spacing:.05em;
+}
+
 .tags{
   display:flex;
   flex-wrap:wrap;
