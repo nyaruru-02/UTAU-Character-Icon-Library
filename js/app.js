@@ -24,7 +24,7 @@ async function init(){
 }
 
 async function loadCharacters(){
-  const res = await fetch(DATA_URL, { cache:'no-store' });
+  const res = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache:'no-store' });
   if(!res.ok) throw new Error('characters.jsonを読み込めませんでした');
   const data = await res.json();
 
@@ -35,16 +35,31 @@ async function loadCharacters(){
     romaji: row.romaji || '',
     icon: row.icon || '',
     url: row.url || '',
-    tags: normalizeTags(row.tags),
-    workTags: normalizeTags(row.workTags || row.work_tags || row.works || row.series),
+    // GitHub Pages上でもExcel/JSONの列名ゆれに強くする。
+    // 例：tags / tag / Tags / タグ / characterTags などを通常タグとして読む。
+    tags: collectTagsFromFields(row, ['tags','tag','Tags','Tag','characterTags','character_tags','normalTags','normal_tags','タグ']),
+    // 作品タグも列名ゆれに対応。
+    workTags: collectTagsFromFields(row, ['workTags','work_tags','works','work','series','seriesTags','series_tags','作品タグ','作品','シリーズ']),
     createdAt: row.createdAt || row.created_at || ''
   }));
 }
 
+function collectTagsFromFields(row, keys){
+  const result = [];
+  keys.forEach(key => {
+    normalizeTags(row[key]).forEach(tag => {
+      if(tag && !result.includes(tag)) result.push(tag);
+    });
+  });
+  return result;
+}
 
 function normalizeTags(value){
   if(Array.isArray(value)) return value.map(t => String(t).trim()).filter(Boolean);
-  return String(value || '').split('|').map(t => t.trim()).filter(Boolean);
+  return String(value || '')
+    .split(/[|｜,，、\n\r]+/)
+    .map(t => t.trim())
+    .filter(Boolean);
 }
 
 function bindEvents(){
