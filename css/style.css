@@ -176,11 +176,17 @@ select,.search-box input{
 .search-box{
   display:flex;
   gap:8px;
-  max-width:420px;
+  max-width:680px;
+  align-items:center;
+}
+
+.search-box .tag-select{
+  flex:0 0 120px;
 }
 
 .search-box input{
-  flex:1
+  flex:1;
+  min-width:0;
 }
 
 .search-box button,.button{
@@ -495,8 +501,8 @@ select,.search-box input{
 }
 
 .hero-search{
-  flex:1 1 420px;
-  min-width:280px;
+  flex:1;
+  max-width:550px;
   margin:0;
 }
 
@@ -878,4 +884,56 @@ select,.search-box input{
 
 .collapsible-wrap .tag-more-btn{
   align-self:center;
+}
+
+
+/* ===== Update: side search has no tag selector; keep main tag selector and search field horizontal on mobile ===== */
+.side-search-box .tag-select{
+  display:none;
+}
+
+@media (max-width: 640px){
+  .hero-search{
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    min-height:0;
+  }
+
+  .hero-search .tag-select{
+    flex:0 0 calc(40% - 4px);
+    min-width:104px;
+    height:42px;
+    padding:0 8px;
+    font-size:13px;
+  }
+
+  .hero-search input{
+    flex:1 1 calc(60% - 4px);
+    min-width:0;
+    height:42px;
+    padding:0 8px;
+    font-size:13px;
+  }
+
+  .hero-search button{
+    flex:0 0 100%;
+    width:100%;
+    height:42px;
+    padding:0 12px;
+    font-size:13px;
+    white-space:nowrap;
+  }
+
+  .side-search-box{
+    flex-direction:row;
+    min-height:0;
+  }
+
+  .side-search-box button{
+    width:auto;
+    flex:0 0 auto;
+  }
 }

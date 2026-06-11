@@ -1,4 +1,4 @@
-const DATA_URL = 'data/characters.json';
+const DATA_URL = new URL('../data/characters.json', document.currentScript.src).href;
 const KANA_GROUPS = [
   { key:'あ', chars:['あ','い','う','え','お'] }, { key:'か', chars:['か','き','く','け','こ','が','ぎ','ぐ','げ','ご'] },
   { key:'さ', chars:['さ','し','す','せ','そ','ざ','じ','ず','ぜ','ぞ'] }, { key:'た', chars:['た','ち','つ','て','と','だ','ぢ','づ','で','ど'] },
@@ -58,34 +58,73 @@ function bindEvents(){
 
 function onSearch(e){
   e.preventDefault();
-  const q = (e.currentTarget.querySelector('input').value || '').trim();
-  navigate(q ? `?q=${encodeURIComponent(q)}` : './');
+  const form = e.currentTarget;
+  const q = (form.querySelector('input')?.value || '').trim();
+  const selectedTag = (form.querySelector('select')?.value || '').trim();
+  const params = new URLSearchParams();
+
+  if(q) params.set('q', q);
+  if(selectedTag) params.set('tag', selectedTag);
+
+  navigate(params.toString() ? `?${params.toString()}` : './');
 }
 function navigate(url){ history.pushState(null, '', url); renderByUrl(); }
 function getParams(){ return new URLSearchParams(location.search); }
 
 function renderByUrl(){
   const p = getParams();
-  const q = p.get('q'); const tag = p.get('tag'); const kana = p.get('kana'); const view = p.get('view');
-  let list = [...characters], title='キャラクター一覧', crumb='TOP';
-  if(view === 'tags') { title='タグ一覧'; document.querySelector('#tagsPanel').scrollIntoView({block:'start'}); }
+  const q = p.get('q');
+  const tag = p.get('tag');
+  const kana = p.get('kana');
+  const view = p.get('view');
+
+  syncSearchControls(q || '', tag || '');
+
+  let list = [...characters];
+  const titleParts = [];
+  const crumbParts = ['TOP'];
+
+  if(view === 'tags') {
+    document.querySelector('#tagsPanel').scrollIntoView({block:'start'});
+  }
+
+  // 検索語・タグ・50音は排他にせず、すべて同時に絞り込む。
+  // 例：タグで絞り込み中に「か」を押した場合、該当タグ内の「か行」だけを表示する。
   if(q){
     const key = q.toLowerCase();
     list = list.filter(c => [c.name,c.kana,c.romaji,...c.tags].some(v => String(v).toLowerCase().includes(key)));
-    title = `「${escapeHtml(q)}」の検索結果`; crumb = `TOP ＞ 検索`;
-  } else if(tag){
-    list = list.filter(c => c.tags.includes(tag)); title = `タグ：${escapeHtml(tag)}`; crumb = `TOP ＞ タグ一覧 ＞ ${escapeHtml(tag)}`;
-  } else if(kana && kana !== 'all'){
-    const g = KANA_GROUPS.find(x => x.key === kana);
-    list = list.filter(c => inKanaGroup(c.kana, g)); title = `${escapeHtml(kana)}行のキャラクター一覧`; crumb = `TOP ＞ 50音 ＞ ${escapeHtml(kana)}行`;
+    titleParts.push(`「${escapeHtml(q)}」`);
+    crumbParts.push('検索');
   }
+
+  if(tag){
+    list = list.filter(c => c.tags.includes(tag));
+    titleParts.push(`タグ：${escapeHtml(tag)}`);
+    crumbParts.push(`タグ一覧 ＞ ${escapeHtml(tag)}`);
+  }
+
+  if(kana && kana !== 'all'){
+    const g = KANA_GROUPS.find(x => x.key === kana);
+    list = list.filter(c => inKanaGroup(c.kana, g));
+    titleParts.push(`${escapeHtml(kana)}行`);
+    crumbParts.push(`50音 ＞ ${escapeHtml(kana)}行`);
+  }
+
+  let title = 'キャラクター一覧';
+  if(view === 'tags' && !q && !tag && !kana){
+    title = 'タグ一覧';
+  }else if(titleParts.length){
+    title = `${titleParts.join(' / ')}のキャラクター一覧`;
+  }
+
   list = sortCharacters(list);
   document.querySelector('#resultTitle').innerHTML = title;
-  document.querySelector('#breadcrumb').innerHTML = crumb;
+  document.querySelector('#breadcrumb').innerHTML = crumbParts.join(' ＞ ');
   document.querySelector('#resultCount').textContent = `全 ${list.length} 件`;
   visibleCharacterCount = 0;
   lastGridColumnCount = 0;
-  renderCharacters(list); renderKanaNav(kana);
+  renderCharacters(list);
+  renderKanaNav(kana);
 }
 function sortCharacters(list){
   const mode = document.querySelector('#sortSelect').value;
@@ -193,11 +232,37 @@ function refreshCharacterVisibleCountOnResize(){
   renderCharacters(currentCharacterList);
 }
 function renderKanaNav(active){
+  const params = getParams();
+  const baseList = getListBeforeKanaFilter();
+
   const html = KANA_GROUPS.map(g => {
-    const count = characters.filter(c => inKanaGroup(c.kana, g)).length;
-    return `<a class="${active===g.key?'is-active':''} ${count===0?'is-disabled':''}" href="?kana=${encodeURIComponent(g.key)}">${g.key}</a>`;
+    const count = baseList.filter(c => inKanaGroup(c.kana, g)).length;
+    const hrefParams = new URLSearchParams(params);
+    hrefParams.delete('view');
+    hrefParams.set('kana', g.key);
+    const href = `?${hrefParams.toString()}`;
+
+    return `<a class="${active===g.key?'is-active':''} ${count===0?'is-disabled':''}" href="${href}">${g.key}</a>`;
   }).join('');
   document.querySelector('#kanaNav').innerHTML = html;
+}
+
+function getListBeforeKanaFilter(){
+  const p = getParams();
+  const q = p.get('q');
+  const tag = p.get('tag');
+  let list = [...characters];
+
+  if(q){
+    const key = q.toLowerCase();
+    list = list.filter(c => [c.name,c.kana,c.romaji,...c.tags].some(v => String(v).toLowerCase().includes(key)));
+  }
+
+  if(tag){
+    list = list.filter(c => c.tags.includes(tag));
+  }
+
+  return list;
 }
 function renderTags(){
   const counts = new Map();
@@ -206,7 +271,51 @@ function renderTags(){
   const html = tags.map(([t,n]) => `<a href="?tag=${encodeURIComponent(t)}">${escapeHtml(t)} <span>(${n})</span></a>`).join('');
   document.querySelector('#tagCloud').innerHTML = tags.slice(0,10).map(([t,n]) => `<a href="?tag=${encodeURIComponent(t)}">${escapeHtml(t)} <span>(${n})</span></a>`).join('');
   document.querySelector('#allTags').innerHTML = html;
+  renderTagSelectOptions(tags);
   initCollapsibleSideColumns();
+}
+
+function renderTagSelectOptions(tags){
+  const sortedTagNames = [...tags]
+    .map(item => Array.isArray(item) ? item[0] : item)
+    .map(t => String(t || '').trim())
+    .filter(Boolean)
+    .filter((tag, index, arr) => arr.indexOf(tag) === index)
+    .sort((a,b) => a.localeCompare(b, 'ja'));
+
+  document.querySelectorAll('.tag-select').forEach(select => {
+    const currentValue = getParams().get('tag') || select.value || '';
+    select.replaceChildren();
+
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = 'すべてのタグ';
+    select.appendChild(defaultOption);
+
+    sortedTagNames.forEach(tag => {
+      const option = document.createElement('option');
+      option.value = tag;
+      option.textContent = tag;
+      select.appendChild(option);
+    });
+
+    select.value = sortedTagNames.includes(currentValue) ? currentValue : '';
+  });
+
+  const currentTag = getParams().get('tag') || '';
+  syncSearchControls(getParams().get('q') || '', currentTag);
+}
+
+function syncSearchControls(q, tag){
+  ['#searchInput', '#sideSearchInput'].forEach(selector => {
+    const input = document.querySelector(selector);
+    if(input && input.value !== q) input.value = q;
+  });
+
+  ['#tagSelect'].forEach(selector => {
+    const select = document.querySelector(selector);
+    if(select && select.value !== tag) select.value = tag;
+  });
 }
 
 function initCollapsibleSideColumns(){
