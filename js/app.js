@@ -35,13 +35,17 @@ async function loadCharacters(){
     romaji: row.romaji || '',
     icon: row.icon || '',
     url: row.url || '',
-    tags: Array.isArray(row.tags)
-      ? row.tags.map(t => String(t).trim()).filter(Boolean)
-      : String(row.tags || '').split('|').map(t => t.trim()).filter(Boolean),
+    tags: normalizeTags(row.tags),
+    workTags: normalizeTags(row.workTags || row.work_tags || row.works || row.series),
     createdAt: row.createdAt || row.created_at || ''
   }));
 }
 
+
+function normalizeTags(value){
+  if(Array.isArray(value)) return value.map(t => String(t).trim()).filter(Boolean);
+  return String(value || '').split('|').map(t => t.trim()).filter(Boolean);
+}
 
 function bindEvents(){
   window.addEventListener('popstate', renderByUrl);
@@ -75,6 +79,7 @@ function renderByUrl(){
   const p = getParams();
   const q = p.get('q');
   const tag = p.get('tag');
+  const work = p.get('work');
   const kana = p.get('kana');
   const view = p.get('view');
 
@@ -92,7 +97,7 @@ function renderByUrl(){
   // 例：タグで絞り込み中に「か」を押した場合、該当タグ内の「か行」だけを表示する。
   if(q){
     const key = q.toLowerCase();
-    list = list.filter(c => [c.name,c.kana,c.romaji,...c.tags].some(v => String(v).toLowerCase().includes(key)));
+    list = list.filter(c => [c.name,c.kana,c.romaji,...c.tags,...c.workTags].some(v => String(v).toLowerCase().includes(key)));
     titleParts.push(`「${escapeHtml(q)}」`);
     crumbParts.push('検索');
   }
@@ -101,6 +106,12 @@ function renderByUrl(){
     list = list.filter(c => c.tags.includes(tag));
     titleParts.push(`タグ：${escapeHtml(tag)}`);
     crumbParts.push(`タグ一覧 ＞ ${escapeHtml(tag)}`);
+  }
+
+  if(work){
+    list = list.filter(c => c.workTags.includes(work));
+    titleParts.push(`作品：${escapeHtml(work)}`);
+    crumbParts.push(`作品タグ ＞ ${escapeHtml(work)}`);
   }
 
   if(kana && kana !== 'all'){
@@ -129,9 +140,25 @@ function renderByUrl(){
 function sortCharacters(list){
   const mode = document.querySelector('#sortSelect').value;
   return list.sort((a,b)=>{
-    if(mode === 'name-asc') return a.name.localeCompare(b.name, 'ja');
-    if(mode === 'new-desc') return String(b.createdAt).localeCompare(String(a.createdAt));
-    return a.kana.localeCompare(b.kana, 'ja');
+    // 名前順：ひらがな読み（kana）順
+    if(mode === 'kana-asc') return String(a.kana).localeCompare(String(b.kana), 'ja');
+
+    // 表示名順：表示名（name）順
+    if(mode === 'name-asc') return String(a.name).localeCompare(String(b.name), 'ja');
+
+    // 新しい順：id/番号が大きいものから
+    if(mode === 'new-desc'){
+      const aId = Number(a.id);
+      const bId = Number(b.id);
+
+      if(Number.isFinite(aId) && Number.isFinite(bId)){
+        return bId - aId;
+      }
+
+      return String(b.id).localeCompare(String(a.id), 'ja', { numeric:true });
+    }
+
+    return String(a.kana).localeCompare(String(b.kana), 'ja');
   });
 }
 function inKanaGroup(kana, group){
@@ -157,6 +184,7 @@ function renderCharacters(list){
         <h3 class="character-name">${escapeHtml(c.name)}</h3>
         <p class="reading1">${escapeHtml(c.kana)}</p>
         <p class="reading2">${escapeHtml(c.romaji)}</p>
+        ${c.workTags.length ? `<div class="tags work-tags">${c.workTags.map(t => `<a class="tag work-tag" href="?work=${encodeURIComponent(t)}">${escapeHtml(t)}</a>`).join('')}</div>` : ''}
         <div class="tags">${c.tags.map(t => `<a class="tag" href="?tag=${encodeURIComponent(t)}">${escapeHtml(t)}</a>`).join('')}</div>
         ${c.url ? `<a class="detail-link" href="${escapeAttr(c.url)}" target="_blank" rel="noopener">管理サイトはこちら</a>` : ''}
       </div>
@@ -251,15 +279,20 @@ function getListBeforeKanaFilter(){
   const p = getParams();
   const q = p.get('q');
   const tag = p.get('tag');
+  const work = p.get('work');
   let list = [...characters];
 
   if(q){
     const key = q.toLowerCase();
-    list = list.filter(c => [c.name,c.kana,c.romaji,...c.tags].some(v => String(v).toLowerCase().includes(key)));
+    list = list.filter(c => [c.name,c.kana,c.romaji,...c.tags,...c.workTags].some(v => String(v).toLowerCase().includes(key)));
   }
 
   if(tag){
     list = list.filter(c => c.tags.includes(tag));
+  }
+
+  if(work){
+    list = list.filter(c => c.workTags.includes(work));
   }
 
   return list;
@@ -271,6 +304,7 @@ function renderTags(){
   const html = tags.map(([t,n]) => `<a href="?tag=${encodeURIComponent(t)}">${escapeHtml(t)} <span>(${n})</span></a>`).join('');
   document.querySelector('#tagCloud').innerHTML = tags.slice(0,10).map(([t,n]) => `<a href="?tag=${encodeURIComponent(t)}">${escapeHtml(t)} <span>(${n})</span></a>`).join('');
   document.querySelector('#allTags').innerHTML = html;
+
   renderTagSelectOptions(tags);
   initCollapsibleSideColumns();
 }

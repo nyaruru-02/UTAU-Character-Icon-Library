@@ -81,9 +81,9 @@
         </div>
         <div class="controls">
           <select id="sortSelect" aria-label="並び替え">
+            <option value="new-desc" selected>新しい順</option>
             <option value="kana-asc">名前順</option>
             <option value="name-asc">表示名順</option>
-            <option value="new-desc">新しい順</option>
           </select>
           <button id="gridBtn" class="icon-btn is-active" type="button">▦</button>
           <button id="listBtn" class="icon-btn" type="button">☰</button>
@@ -104,7 +104,6 @@
       <h3>人気のタグ</h3>
       <div id="tagCloud" class="tag-cloud"></div>
     </section>
-
     <section class="panel compact" id="tagsPanel">
       <h2>タグ一覧</h2>
       <div id="allTags" class="tag-cloud"></div>
@@ -113,6 +112,6 @@
 </main>
 
 <footer class="footer">© nyaruru</footer>
-<script src="js/app.js?v=20260611-tagselect"></script>
+<script src="js/app.js?v=20260611-sortfix"></script>
 </body>
 </html>

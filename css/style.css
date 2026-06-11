@@ -353,6 +353,16 @@ select,.search-box input{
   font-weight:700
 }
 
+
+.work-tags{
+  margin-bottom:6px;
+}
+
+.work-tag{
+  background:#ebebeb;
+  color:#0c1b4d;
+}
+
 .detail-link{
   display:inline-block;
   margin-top:10px;
