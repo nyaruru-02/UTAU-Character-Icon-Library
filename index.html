@@ -31,7 +31,10 @@
         </p>
         <div class="hero-actions">
           <form id="searchForm" class="search-box hero-search">
-            <input id="searchInput" type="search" placeholder="キャラクター名・読み・ローマ字・タグで検索" autocomplete="off" />
+            <select id="tagSelect" class="tag-select" aria-label="タグを指定">
+              <option value="">すべてのタグ</option>
+            </select>
+            <input id="searchInput" type="search" placeholder="キャラクター名・読み・ローマ字で検索" autocomplete="off" />
             <button type="submit">検索</button>
           </form>
         </div>
@@ -94,8 +97,8 @@
   <aside class="side-column">
     <section class="panel compact">
       <h2>キャラクター検索</h2>
-      <form id="sideSearchForm" class="search-box small">
-        <input id="sideSearchInput" type="search" placeholder="名前・タグで検索" autocomplete="off" />
+      <form id="sideSearchForm" class="search-box small side-search-box">
+        <input id="sideSearchInput" type="search" placeholder="名前・読み・ローマ字で検索" autocomplete="off" />
         <button type="submit">検索</button>
       </form>
       <h3>人気のタグ</h3>
