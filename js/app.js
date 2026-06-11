@@ -24,30 +24,56 @@ async function init(){
 }
 
 async function loadCharacters(){
-  const res = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache:'no-store' });
-  if(!res.ok) throw new Error('characters.jsonを読み込めませんでした');
-  const data = await res.json();
+  const urls = [
+    new URL('../data/characters.json', document.currentScript.src).href,
+    new URL('./data/characters.json', location.href).href
+  ];
 
-  return data.map(row => ({
-    id: row.id || '',
-    name: row.name || '',
-    kana: row.kana || '',
-    romaji: row.romaji || '',
-    icon: row.icon || '',
-    url: row.url || '',
-    // GitHub Pages上でもExcel/JSONの列名ゆれに強くする。
-    // 例：tags / tag / Tags / タグ / characterTags などを通常タグとして読む。
-    tags: collectTagsFromFields(row, ['tags','tag','Tags','Tag','characterTags','character_tags','normalTags','normal_tags','タグ']),
-    // 作品タグも列名ゆれに対応。
-    workTags: collectTagsFromFields(row, ['workTags','work_tags','works','work','series','seriesTags','series_tags','作品タグ','作品','シリーズ']),
-    createdAt: row.createdAt || row.created_at || ''
-  }));
+  let lastError;
+  for(const url of [...new Set(urls)]){
+    try{
+      const res = await fetch(`${url}?v=${Date.now()}`, { cache:'no-store' });
+      if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+      const data = await res.json();
+      const rows = Array.isArray(data) ? data : (Array.isArray(data.characters) ? data.characters : []);
+      return rows.map(normalizeCharacter).filter(c => c.name || c.kana || c.romaji);
+    }catch(error){
+      lastError = error;
+    }
+  }
+
+  console.error('characters.jsonを読み込めませんでした', lastError);
+  return [];
+}
+
+function normalizeCharacter(row, index){
+  return {
+    id: firstValue(row, ['id','ID','Id','no','No','番号']) || String(index + 1),
+    name: firstValue(row, ['name','Name','displayName','display_name','表示名','名前','キャラクター名']) || '',
+    kana: firstValue(row, ['kana','Kana','reading','yomi','読み','ひらがな','かな']) || '',
+    romaji: firstValue(row, ['romaji','Romaji','roman','romanji','ローマ字','ヘボン式']) || '',
+    icon: firstValue(row, ['icon','Icon','image','Image','画像','アイコン','アイコン画像']) || '',
+    url: firstValue(row, ['url','URL','link','Link','リンク']) || '',
+    tags: collectTagsFromFields(row, ['tags','tag','Tags','Tag','characterTags','character_tags','normalTags','normal_tags','タグ','通常タグ']),
+    workTags: collectTagsFromFields(row, ['workTags','worktags','work_tags','WorkTags','works','work','series','seriesTags','series_tags','作品タグ','作品','シリーズ']),
+    createdAt: firstValue(row, ['createdAt','created_at','date','登録日','作成日']) || ''
+  };
+}
+
+function firstValue(row, keys){
+  if(!row || typeof row !== 'object') return '';
+  for(const key of keys){
+    if(Object.prototype.hasOwnProperty.call(row, key) && row[key] !== undefined && row[key] !== null && String(row[key]).trim() !== ''){
+      return row[key];
+    }
+  }
+  return '';
 }
 
 function collectTagsFromFields(row, keys){
   const result = [];
   keys.forEach(key => {
-    normalizeTags(row[key]).forEach(tag => {
+    normalizeTags(row?.[key]).forEach(tag => {
       if(tag && !result.includes(tag)) result.push(tag);
     });
   });
@@ -55,8 +81,29 @@ function collectTagsFromFields(row, keys){
 }
 
 function normalizeTags(value){
-  if(Array.isArray(value)) return value.map(t => String(t).trim()).filter(Boolean);
-  return String(value || '')
+  if(value === undefined || value === null) return [];
+  if(Array.isArray(value)){
+    return value.flatMap(normalizeTags).filter(Boolean);
+  }
+  if(typeof value === 'object'){
+    return Object.values(value).flatMap(normalizeTags).filter(Boolean);
+  }
+
+  const text = String(value).trim();
+  if(!text) return [];
+
+  // Excel/変換ツールによっては '["タグA","タグB"]' のような文字列になるため対応。
+  if((text.startsWith('[') && text.endsWith(']')) || (text.startsWith('{') && text.endsWith('}'))){
+    try{
+      const parsed = JSON.parse(text);
+      const parsedTags = normalizeTags(parsed);
+      if(parsedTags.length) return parsedTags;
+    }catch(_){
+      // JSON文字列でなければ通常の区切り処理へ進む。
+    }
+  }
+
+  return text
     .split(/[|｜,，、\n\r]+/)
     .map(t => t.trim())
     .filter(Boolean);
@@ -153,29 +200,40 @@ function renderByUrl(){
   renderKanaNav(kana);
 }
 function sortCharacters(list){
-  const mode = document.querySelector('#sortSelect').value;
-  return list.sort((a,b)=>{
+  const select = document.querySelector('#sortSelect');
+  const mode = select?.value || 'new-desc';
+
+  return [...list].sort((a,b)=>{
     // 名前順：ひらがな読み（kana）順
-    if(mode === 'kana-asc') return String(a.kana).localeCompare(String(b.kana), 'ja');
-
-    // 表示名順：表示名（name）順
-    if(mode === 'name-asc') return String(a.name).localeCompare(String(b.name), 'ja');
-
-    // 新しい順：id/番号が大きいものから
-    if(mode === 'new-desc'){
-      const aId = Number(a.id);
-      const bId = Number(b.id);
-
-      if(Number.isFinite(aId) && Number.isFinite(bId)){
-        return bId - aId;
-      }
-
-      return String(b.id).localeCompare(String(a.id), 'ja', { numeric:true });
+    if(mode === 'kana-asc'){
+      return compareJapanese(a.kana || a.name, b.kana || b.name);
     }
 
-    return String(a.kana).localeCompare(String(b.kana), 'ja');
+    // 表示名順：表示名（name）順
+    if(mode === 'name-asc'){
+      return compareJapanese(a.name || a.kana, b.name || b.kana);
+    }
+
+    // 新しい順：id/番号が大きいものから
+    const aId = toSortableId(a.id);
+    const bId = toSortableId(b.id);
+    if(aId !== bId) return bId - aId;
+
+    return compareJapanese(a.kana || a.name, b.kana || b.name);
   });
 }
+
+function toSortableId(value){
+  const text = String(value ?? '').trim();
+  const matchedNumber = text.match(/\d+/g);
+  if(matchedNumber) return Number(matchedNumber.join(''));
+  return 0;
+}
+
+function compareJapanese(a,b){
+  return String(a || '').localeCompare(String(b || ''), 'ja', { numeric:true, sensitivity:'base' });
+}
+
 function inKanaGroup(kana, group){
   if(!group) return true; const first = (kana || '').charAt(0);
   if(group.key === '他') return !KANA_GROUPS.some(g => g.key !== '他' && g.chars.includes(first));

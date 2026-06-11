@@ -4,23 +4,24 @@ let characters = [];
 initRandomPage();
 
 async function initRandomPage(){
-  const res = await fetch(DATA_URL, { cache:'no-store' });
+  const res = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache:'no-store' });
   if(!res.ok){
     document.querySelector('#randomResult').innerHTML = '<p class="empty">characters.jsonを読み込めませんでした。</p>';
     return;
   }
 
   const data = await res.json();
-  characters = data.map(row => ({
-    id: row.id || '',
-    name: row.name || '',
-    kana: row.kana || '',
-    romaji: row.romaji || '',
-    icon: row.icon || '',
-    url: row.url || '',
-    tags: normalizeTags(row.tags),
-    workTags: normalizeTags(row.workTags || row.work_tags || row.works || row.series)
-  }));
+  const rows = Array.isArray(data) ? data : (Array.isArray(data.characters) ? data.characters : []);
+  characters = rows.map((row, index) => ({
+    id: firstValue(row, ['id','ID','Id','no','No','番号']) || String(index + 1),
+    name: firstValue(row, ['name','Name','displayName','display_name','表示名','名前','キャラクター名']) || '',
+    kana: firstValue(row, ['kana','Kana','reading','yomi','読み','ひらがな','かな']) || '',
+    romaji: firstValue(row, ['romaji','Romaji','roman','romanji','ローマ字','ヘボン式']) || '',
+    icon: firstValue(row, ['icon','Icon','image','Image','画像','アイコン','アイコン画像']) || '',
+    url: firstValue(row, ['url','URL','link','Link','リンク']) || '',
+    tags: collectTagsFromFields(row, ['tags','tag','Tags','Tag','characterTags','character_tags','normalTags','normal_tags','タグ','通常タグ']),
+    workTags: collectTagsFromFields(row, ['workTags','worktags','work_tags','WorkTags','works','work','series','seriesTags','series_tags','作品タグ','作品','シリーズ'])
+  })).filter(c => c.name || c.kana || c.romaji);
 
   document.querySelector('#drawRandomBtn').addEventListener('click', drawRandom);
   drawRandom();
@@ -49,9 +50,44 @@ function drawRandom(){
     </article>`;
 }
 
+function firstValue(row, keys){
+  if(!row || typeof row !== 'object') return '';
+  for(const key of keys){
+    if(Object.prototype.hasOwnProperty.call(row, key) && row[key] !== undefined && row[key] !== null && String(row[key]).trim() !== ''){
+      return row[key];
+    }
+  }
+  return '';
+}
+
+function collectTagsFromFields(row, keys){
+  const result = [];
+  keys.forEach(key => {
+    normalizeTags(row?.[key]).forEach(tag => {
+      if(tag && !result.includes(tag)) result.push(tag);
+    });
+  });
+  return result;
+}
+
 function normalizeTags(value){
-  if(Array.isArray(value)) return value.map(t => String(t).trim()).filter(Boolean);
-  return String(value || '').split('|').map(t => t.trim()).filter(Boolean);
+  if(value === undefined || value === null) return [];
+  if(Array.isArray(value)) return value.flatMap(normalizeTags).filter(Boolean);
+  if(typeof value === 'object') return Object.values(value).flatMap(normalizeTags).filter(Boolean);
+
+  const text = String(value).trim();
+  if(!text) return [];
+  if((text.startsWith('[') && text.endsWith(']')) || (text.startsWith('{') && text.endsWith('}'))){
+    try{
+      const parsedTags = normalizeTags(JSON.parse(text));
+      if(parsedTags.length) return parsedTags;
+    }catch(_){ }
+  }
+
+  return text
+    .split(/[|｜,，、\n\r]+/)
+    .map(t => t.trim())
+    .filter(Boolean);
 }
 
 function escapeHtml(s=''){
