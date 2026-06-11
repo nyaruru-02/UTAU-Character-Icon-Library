@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ランダムガチャ｜UTAUキャラクターアイコン配布所</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="./">
+    <span class="brand-icon">♪</span>
+    <span><strong>UTAUキャラクターアイコン配布所</strong><small>UTAU Character Icon Library</small></span>
+  </a>
+  <nav class="nav">
+    <a href="./">ホーム</a>
+    <a href="?view=tags">タグ一覧</a>
+    <a href="terms.html">利用規約</a>
+    <a class="social-link" href="https://x.com/hoshikawa_02" target="_blank">　X　</a>
+    <a class="social-link" href="https://bsky.app/profile/hoshikawa-02.bsky.social" target="_blank">Bluesky</a>
+  </nav>
+</header>
+
+<main class="random-layout">
+  <section class="panel random-panel">
+    <p class="breadcrumb">TOP ＞ ランダムガチャ</p>
+    <h1>ランダムガチャ</h1>
+    <p class="muted">登録キャラクターの中からランダムで1件を表示します。</p>
+
+    <div id="randomResult" class="random-result" aria-live="polite"></div>
+
+    <div class="random-actions">
+      <button id="drawRandomBtn" class="button" type="button">もう一度ガチャを引く</button>
+      <a class="button secondary-button" href="./">一覧へ戻る</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">© nyaruru</footer>
+<script src="js/random.js"></script>
+</body>
+</html>
