@@ -105,11 +105,11 @@
     "icon": "image/amatsuka-fuawa.png",
     "url": "https://utausuzuminnya.jimdofree.com",
     "workTags": "#ふあわあーと",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間|天使",
     "職業タグ": "",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "羽"
   },
   {
     "id": 9,
@@ -119,11 +119,11 @@
     "icon": "image/amane-usagi.png",
     "url": "https://sabaneko.amebaownd.com",
     "workTags": "#雨音うさぎ",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間",
     "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "小物タグ": "動物",
+    "ワンポイントタグ": "渦巻き目、アホ毛"
   },
   {
     "id": 10,
@@ -133,11 +133,11 @@
     "icon": "image/ayashiki.png",
     "url": "https://inudanuki.wixsite.com/gottaniomotyabako",
     "workTags": "#煮バコ",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "故人|幽霊",
     "職業タグ": "",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "ツートンカラー"
   },
   {
     "id": 11,
@@ -147,10 +147,10 @@
     "icon": "image/utakata-tsumugi.png",
     "url": "https://tourist100f.wixsite.com/utakata-kosyo",
     "workTags": "#泡沫古書店",
-    "gender": "",
-    "種族タグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間",
+    "職業タグ": "書店員",
+    "小物タグ": "眼鏡",
     "ワンポイントタグ": ""
   },
   {
@@ -161,10 +161,10 @@
     "icon": "image/utane-uta(defoko).png",
     "url": "-",
     "workTags": "#デフォ子",
-    "gender": "",
+    "gender": "女性",
     "種族タグ": "",
     "職業タグ": "",
-    "小物タグ": "",
+    "小物タグ": "ヘッドセット",
     "ワンポイントタグ": ""
   },
   {
@@ -175,11 +175,11 @@
     "icon": "image/uruya.png",
     "url": "https://sites.google.com/view/tokakobo",
     "workTags": "#透歌工房",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "フィギュア",
     "職業タグ": "",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "尻尾"
   },
   {
     "id": 14,
@@ -203,11 +203,11 @@
     "icon": "image/ohoshi.png",
     "url": "https://ichistart.wixsite.com/official/respiaker",
     "workTags": "#ichistar",
-    "gender": "",
-    "種族タグ": "",
-    "職業タグ": "",
+    "gender": "女性",
+    "種族タグ": "天使",
+    "職業タグ": "クリエイター",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "メッシュ"
   },
   {
     "id": 16,
@@ -217,8 +217,8 @@
     "icon": "image/kagiai-aya.png",
     "url": "https://vividseekers.utau.sorairomarch.com",
     "workTags": "#そらいろマーチ",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "無性別",
+    "種族タグ": "バーチャル",
     "職業タグ": "",
     "小物タグ": "",
     "ワンポイントタグ": ""
@@ -231,9 +231,9 @@
     "icon": "image/kagiai-suzu.png",
     "url": "https://vividseekers.utau.sorairomarch.com",
     "workTags": "#そらいろマーチ",
-    "gender": "",
-    "種族タグ": "",
-    "職業タグ": "",
+    "gender": "無性別",
+    "種族タグ": "バーチャル",
+    "職業タグ": "ヤンキー",
     "小物タグ": "",
     "ワンポイントタグ": ""
   },
@@ -245,10 +245,10 @@
     "icon": "image/kakune-shanonn.png",
     "url": "https://ameutaulii.wixsite.com/telepathycapsule",
     "workTags": "#拡音シャノン",
-    "gender": "",
+    "gender": "女性",
     "種族タグ": "",
     "職業タグ": "",
-    "小物タグ": "",
+    "小物タグ": "ヘアピン|拡声器",
     "ワンポイントタグ": ""
   },
   {
@@ -259,10 +259,10 @@
     "icon": "image/kasane-teddo.png",
     "url": "https://kasaneteto.jp",
     "workTags": "#重音テッド",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "キメラ",
+    "種族タグ": "バーチャル",
     "職業タグ": "",
-    "小物タグ": "",
+    "小物タグ": "イヤーユニット",
     "ワンポイントタグ": ""
   },
   {
@@ -273,8 +273,8 @@
     "icon": "image/kasane-teto.png",
     "url": "https://kasaneteto.jp",
     "workTags": "#重音テト",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "キメラ",
+    "種族タグ": "バーチャル",
     "職業タグ": "",
     "小物タグ": "",
     "ワンポイントタグ": ""
@@ -285,13 +285,13 @@
     "kana": "かすみ うあ",
     "romaji": "Kasumi Ua",
     "icon": "image/kasumi-ua.png",
-    "url": "https://bowlroll.net/user/980255/files#target-tab",
+    "url": "https://bowlroll.net/user/980255",
     "workTags": "#歌う雨やどり",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "堕天使",
     "職業タグ": "",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "両目隠れ|羽"
   },
   {
     "id": 22,
@@ -889,10 +889,10 @@
     "icon": "image/chankonabe.png",
     "url": "https://ichistart.wixsite.com/official/respiaker",
     "workTags": "#ichistar",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "機械",
     "職業タグ": "",
-    "小物タグ": "",
+    "小物タグ": "ヘッドホン",
     "ワンポイントタグ": ""
   },
   {
@@ -1393,11 +1393,11 @@
     "icon": "image/melua-miumiu.png",
     "url": "https://utausuzuminnya.jimdofree.com",
     "workTags": "#みゅみゅあーと",
-    "gender": "",
-    "種族タグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "gender": "女性",
+    "種族タグ": "吸血鬼",
+    "職業タグ": "魔法少女",
+    "小物タグ": "果物",
+    "ワンポイントタグ": "ケモ耳"
   },
   {
     "id": 101,
@@ -1435,10 +1435,10 @@
     "icon": "image/yumeji-katari.png",
     "url": "https://tourist100f.wixsite.com/utakata-kosyo",
     "workTags": "#泡沫古書店",
-    "gender": "",
-    "種族タグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
+    "gender": "男性",
+    "種族タグ": "人間",
+    "職業タグ": "書店員",
+    "小物タグ": "眼鏡",
     "ワンポイントタグ": ""
   },
   {
@@ -1545,13 +1545,13 @@
     "kana": "れいんれこーど",
     "romaji": "Reinrekodo",
     "icon": "image/reinrekodo.png",
-    "url": "https://bowlroll.net/user/980255/files#target-tab",
+    "url": "https://bowlroll.net/user/980255",
     "workTags": "#歌う雨やどり",
-    "gender": "",
-    "種族タグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "gender": "男性",
+    "種族タグ": "機械",
+    "職業タグ": "司書",
+    "小物タグ": "ゴーグル",
+    "ワンポイントタグ": "両目隠れ"
   },
   {
     "id": 112,
@@ -1911,11 +1911,11 @@
     "icon": "image/katanashi-zu.png",
     "url": "https://inudanuki.wixsite.com/gottaniomotyabako",
     "workTags": "#煮バコ",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "故人|ゾンビ",
     "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "小物タグ": "アイバンド",
+    "ワンポイントタグ": "ツートンカラー|片目隠れ"
   },
   {
     "id": 138,
@@ -2051,11 +2051,11 @@
     "icon": "image/ameiro-nerune.png",
     "url": "https://inudanuki.wixsite.com/gottaniomotyabako",
     "workTags": "#煮バコ",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間",
     "職業タグ": "",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "グラデーションカラー"
   },
   {
     "id": 148,
@@ -2569,11 +2569,11 @@
     "icon": "image/dot-pell.png",
     "url": "https://bowlroll.net/user/980255",
     "workTags": "#歌う雨やどり",
-    "gender": "",
-    "種族タグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "gender": "男性",
+    "種族タグ": "人間",
+    "職業タグ": "科学者",
+    "小物タグ": "ゴーグル",
+    "ワンポイントタグ": "両目隠れ"
   },
   {
     "id": 185,
@@ -2867,7 +2867,7 @@
     "種族タグ": "",
     "職業タグ": "",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "セクションカラー"
   },
   {
     "id": 206,
@@ -3003,11 +3003,11 @@
     "icon": "image/kyakuyose-riley.png",
     "url": "https://bowlroll.net/user/980255",
     "workTags": "#歌う雨やどり",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "バーチャル",
     "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "小物タグ": "眼鏡",
+    "ワンポイントタグ": "黒肌"
   },
   {
     "id": 216,
@@ -3059,10 +3059,10 @@
     "icon": "image/yoizuki-mikumo.png",
     "url": "https://vividseekers.utau.sorairomarch.com",
     "workTags": "#そらいろマーチ",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "バーチャル",
     "職業タグ": "",
-    "小物タグ": "",
+    "小物タグ": "ヘアピン",
     "ワンポイントタグ": ""
   },
   {
