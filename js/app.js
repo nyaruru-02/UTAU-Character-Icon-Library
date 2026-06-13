@@ -612,7 +612,7 @@ function renderTagFilterGroups(sourceList = characters){
     { key:'species', field:'speciesTags', title:'種族タグ' },
     { key:'job', field:'jobTags', title:'職業タグ' },
     { key:'item', field:'itemTags', title:'小物タグ' },
-    { key:'point', field:'pointTags', title:'ワンポイントタグ' }
+    { key:'point', field:'pointTags', title:'身体的特徴タグ' }
   ];
   const selected = getSelectedFilterGroupsFromParams();
 
