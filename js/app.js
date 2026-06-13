@@ -15,12 +15,20 @@ let lastGridColumnCount = 0;
 init();
 
 async function init(){
-  characters = await loadCharacters();
-  renderKanaNav();
-  renderTags();
-  initCollapsibleSideColumns();
-  bindEvents();
-  renderByUrl();
+  try{
+    characters = await loadCharacters();
+    renderKanaNav();
+    renderTags();
+    bindEvents();
+    renderByUrl();
+  }catch(error){
+    console.error('初期化に失敗しました', error);
+    const empty = document.querySelector('#emptyMessage');
+    if(empty){
+      empty.hidden = false;
+      empty.textContent = 'サイトの読み込み中にエラーが発生しました。';
+    }
+  }
 }
 
 async function loadCharacters(){
@@ -47,15 +55,31 @@ async function loadCharacters(){
 }
 
 function normalizeCharacter(row, index){
+  const speciesTags = collectTagsFromFields(row, ['speciesTags','species_tags','SpeciesTags','raceTags','race_tags','種族タグ','種族']);
+  const jobTags = collectTagsFromFields(row, ['jobTags','job_tags','JobTags','occupationTags','occupation_tags','職業タグ','職業']);
+  const itemTags = collectTagsFromFields(row, ['itemTags','item_tags','ItemTags','accessoryTags','accessory_tags','小物タグ','小物']);
+  const pointTags = collectTagsFromFields(row, ['pointTags','point_tags','PointTags','featureTags','feature_tags','onePointTags','one_point_tags','ワンポイントタグ','特徴タグ','特徴']);
+  const normalTags = collectTagsFromFields(row, ['tags','tag','Tags','Tag','characterTags','character_tags','normalTags','normal_tags','タグ','通常タグ']);
+  const categoryTags = uniqueTags([...speciesTags, ...jobTags, ...itemTags, ...pointTags]);
+  const allCharacterTags = uniqueTags([...normalTags, ...categoryTags]);
+  const gender = normalizeTextValue(firstValue(row, ['gender','Gender','genderTag','gender_tag','GenderTag','sex','Sex','性別','性別タグ'])) || '';
+  const genderTags = gender ? [gender] : [];
+
   return {
     id: firstValue(row, ['id','ID','Id','no','No','番号']) || String(index + 1),
     name: firstValue(row, ['name','Name','displayName','display_name','表示名','名前','キャラクター名']) || '',
     kana: firstValue(row, ['kana','Kana','reading','yomi','読み','ひらがな','かな']) || '',
     romaji: firstValue(row, ['romaji','Romaji','roman','romanji','ローマ字','ヘボン式']) || '',
-    gender: normalizeTextValue(firstValue(row, ['gender','Gender','genderTag','gender_tag','GenderTag','sex','Sex','性別','性別タグ'])) || '',
-    icon: firstValue(row, ['icon','Icon','image','Image','画像','アイコン','アイコン画像']) || '',
+    gender,
+    genderTags,
+    icon: normalizeIconPath(firstValue(row, ['icon','Icon','image','Image','画像','アイコン','アイコン画像']), firstValue(row, ['romaji','Romaji','roman','romanji','ローマ字','ヘボン式']) || firstValue(row, ['name','Name','displayName','display_name','表示名','名前','キャラクター名']) || ''),
     url: firstValue(row, ['url','URL','link','Link','リンク']) || '',
-    tags: collectTagsFromFields(row, ['tags','tag','Tags','Tag','characterTags','character_tags','normalTags','normal_tags','タグ','通常タグ']),
+    tags: allCharacterTags,
+    speciesTags,
+    jobTags,
+    itemTags,
+    pointTags,
+    categoryTags,
     workTags: collectTagsFromFields(row, ['workTags','worktags','work_tags','WorkTags','works','work','series','seriesTags','series_tags','作品タグ','作品','シリーズ']),
     createdAt: firstValue(row, ['createdAt','created_at','date','登録日','作成日']) || ''
   };
@@ -92,6 +116,15 @@ function collectTagsFromFields(row, keys){
   return result;
 }
 
+function uniqueTags(tags){
+  const result = [];
+  tags.forEach(tag => {
+    const value = String(tag || '').trim();
+    if(value && !result.includes(value)) result.push(value);
+  });
+  return result;
+}
+
 function normalizeTags(value){
   if(value === undefined || value === null) return [];
   if(Array.isArray(value)){
@@ -123,30 +156,119 @@ function normalizeTags(value){
 
 function bindEvents(){
   window.addEventListener('popstate', renderByUrl);
-  document.querySelector('#searchForm').addEventListener('submit', onSearch);
-  document.querySelector('#sideSearchForm').addEventListener('submit', onSearch);
-  document.querySelector('#sortSelect').addEventListener('change', renderByUrl);
-  document.querySelector('#gridBtn').addEventListener('click', () => setViewMode('grid'));
-  document.querySelector('#listBtn').addEventListener('click', () => setViewMode('list'));
+  document.querySelector('#sideSearchForm')?.addEventListener('submit', e => e.preventDefault());
+  document.querySelector('#sideSearchInput')?.addEventListener('input', debounce(event => applySearchFromControls(event.target), 180));
+  document.querySelector('#tagFilterGroups')?.addEventListener('change', event => {
+    if(event.target.matches('input[type="checkbox"]')) applySearchFromControls();
+  });
+  document.querySelector('#characterList')?.addEventListener('click', event => {
+    const link = event.target.closest('a.tag[href]');
+    if(!link) return;
+    event.preventDefault();
+    navigate(link.getAttribute('href'), { keepScroll:true });
+  });
+  document.querySelector('#kanaNav')?.addEventListener('click', event => {
+    const link = event.target.closest('a[href]');
+    if(!link) return;
+    event.preventDefault();
+    if(link.classList.contains('is-disabled')) return;
+    navigate(link.getAttribute('href'), { keepScroll:true });
+  });
+  document.querySelector('#kanaAllLink')?.addEventListener('click', event => {
+    event.preventDefault();
+    const params = getParams();
+    params.delete('kana');
+    params.delete('view');
+    const query = params.toString();
+    navigate(query ? `?${query}` : './', { keepScroll:true });
+  });
+  document.querySelector('#sortSelect')?.addEventListener('change', renderByUrl);
+  document.querySelector('#gridBtn')?.addEventListener('click', () => setViewMode('grid'));
+  document.querySelector('#listBtn')?.addEventListener('click', () => setViewMode('list'));
+  bindMobileSearchDrawer();
   window.addEventListener('resize', debounce(() => {
-    initCollapsibleSideColumns();
+    initCollapsibleFilterGroups();
     refreshCharacterVisibleCountOnResize();
+    if(window.matchMedia('(min-width: 761px)').matches) closeMobileSearchDrawer();
   }, 150));
 }
 
-function onSearch(e){
-  e.preventDefault();
-  const form = e.currentTarget;
-  const q = (form.querySelector('input')?.value || '').trim();
-  const selectedTag = (form.querySelector('select')?.value || '').trim();
-  const params = new URLSearchParams();
+function bindMobileSearchDrawer(){
+  const toggle = document.querySelector('#mobileSearchToggle');
+  const close = document.querySelector('#mobileSearchClose');
+  const drawer = document.querySelector('#sideSearchDrawer');
+  const backdrop = document.querySelector('#mobileSearchBackdrop');
+  if(!toggle || !drawer || !backdrop) return;
 
-  if(q) params.set('q', q);
-  if(selectedTag) params.set('tag', selectedTag);
-
-  navigate(params.toString() ? `?${params.toString()}` : './');
+  toggle.addEventListener('click', () => openMobileSearchDrawer());
+  close?.addEventListener('click', () => closeMobileSearchDrawer());
+  backdrop.addEventListener('click', () => closeMobileSearchDrawer());
+  document.addEventListener('keydown', event => {
+    if(event.key === 'Escape') closeMobileSearchDrawer();
+  });
 }
-function navigate(url){ history.pushState(null, '', url); renderByUrl(); }
+
+function openMobileSearchDrawer(){
+  const toggle = document.querySelector('#mobileSearchToggle');
+  const drawer = document.querySelector('#sideSearchDrawer');
+  const backdrop = document.querySelector('#mobileSearchBackdrop');
+  if(!toggle || !drawer || !backdrop) return;
+  backdrop.hidden = false;
+  requestAnimationFrame(() => {
+    drawer.classList.add('is-open');
+    backdrop.classList.add('is-open');
+    document.body.classList.add('mobile-search-open');
+    toggle.setAttribute('aria-expanded', 'true');
+  });
+}
+
+function closeMobileSearchDrawer(){
+  const toggle = document.querySelector('#mobileSearchToggle');
+  const drawer = document.querySelector('#sideSearchDrawer');
+  const backdrop = document.querySelector('#mobileSearchBackdrop');
+  if(!toggle || !drawer || !backdrop) return;
+  drawer.classList.remove('is-open');
+  backdrop.classList.remove('is-open');
+  document.body.classList.remove('mobile-search-open');
+  toggle.setAttribute('aria-expanded', 'false');
+  setTimeout(() => {
+    if(!backdrop.classList.contains('is-open')) backdrop.hidden = true;
+  }, 220);
+}
+
+
+function applySearchFromControls(sourceInput = null){
+  const q = (sourceInput?.matches?.('input[type="search"]') ? sourceInput.value : (document.querySelector('#sideSearchInput')?.value || '')).trim();
+  const params = new URLSearchParams(location.search);
+
+  ['q','tag','gender','species','job','item','point','view'].forEach(key => params.delete(key));
+  if(q) params.set('q', q);
+
+  const selectedGroups = getSelectedFilterGroupsFromDom();
+  Object.entries(selectedGroups).forEach(([key, values]) => {
+    if(values.length) params.set(key, values.join(','));
+  });
+
+  const query = params.toString();
+  navigate(query ? `?${query}` : './');
+}
+
+function getSelectedFilterGroupsFromDom(){
+  const groups = { gender:[], species:[], job:[], item:[], point:[] };
+  document.querySelectorAll('#tagFilterGroups input[type="checkbox"]:checked').forEach(input => {
+    const key = input.dataset.group;
+    if(groups[key]) groups[key].push(input.value);
+  });
+  return groups;
+}
+function navigate(url, options = {}){
+  const scrollY = window.scrollY;
+  history.pushState(null, '', url);
+  renderByUrl();
+  if(options.keepScroll){
+    requestAnimationFrame(() => window.scrollTo({ top: scrollY, left: 0, behavior: 'auto' }));
+  }
+}
 function getParams(){ return new URLSearchParams(location.search); }
 
 function renderByUrl(){
@@ -156,41 +278,42 @@ function renderByUrl(){
   const work = p.get('work');
   const kana = p.get('kana');
   const view = p.get('view');
+  const selectedFilterGroups = getSelectedFilterGroupsFromParams(p);
 
-  syncSearchControls(q || '', tag || '');
+  syncSearchControls(q || '', selectedFilterGroups);
 
-  let list = [...characters];
+  let list = filterCharacters({ excludeKana:false });
+  const listBeforeKana = filterCharacters({ excludeKana:true });
   const titleParts = [];
   const crumbParts = ['TOP'];
 
   if(view === 'tags') {
-    document.querySelector('#tagsPanel').scrollIntoView({block:'start'});
+    // タグ一覧枠は廃止済み。旧URL互換として何もしない。
   }
 
-  // 検索語・タグ・50音は排他にせず、すべて同時に絞り込む。
-  // 例：タグで絞り込み中に「か」を押した場合、該当タグ内の「か行」だけを表示する。
   if(q){
-    const key = q.toLowerCase();
-    list = list.filter(c => [c.name,c.kana,c.romaji,c.gender,...c.tags,...c.workTags].some(v => String(v).toLowerCase().includes(key)));
     titleParts.push(`「${escapeHtml(q)}」`);
     crumbParts.push('検索');
   }
 
   if(tag){
-    list = list.filter(c => c.tags.includes(tag));
     titleParts.push(`タグ：${escapeHtml(tag)}`);
-    crumbParts.push(`タグ一覧 ＞ ${escapeHtml(tag)}`);
+    crumbParts.push(`タグ ＞ ${escapeHtml(tag)}`);
   }
 
   if(work){
-    list = list.filter(c => c.workTags.includes(work));
     titleParts.push(`作品：${escapeHtml(work)}`);
     crumbParts.push(`作品タグ ＞ ${escapeHtml(work)}`);
   }
 
+  const filterLabels = [];
+  Object.values(selectedFilterGroups).forEach(values => filterLabels.push(...values));
+  if(filterLabels.length){
+    titleParts.push(`タグ：${filterLabels.map(escapeHtml).join(' / ')}`);
+    crumbParts.push('絞り込みタグ');
+  }
+
   if(kana && kana !== 'all'){
-    const g = KANA_GROUPS.find(x => x.key === kana);
-    list = list.filter(c => inKanaGroup(c.kana, g));
     titleParts.push(`${escapeHtml(kana)}行`);
     crumbParts.push(`50音 ＞ ${escapeHtml(kana)}行`);
   }
@@ -209,7 +332,65 @@ function renderByUrl(){
   visibleCharacterCount = 0;
   lastGridColumnCount = 0;
   renderCharacters(list);
-  renderKanaNav(kana);
+  renderKanaNav(kana, listBeforeKana);
+  renderTagFilterGroups(list);
+  initCollapsibleFilterGroups();
+  syncSearchControls(q || '', selectedFilterGroups);
+}
+
+
+function filterCharacters(options = {}){
+  const { excludeKana = false } = options;
+  const p = getParams();
+  const q = p.get('q');
+  const tag = p.get('tag');
+  const work = p.get('work');
+  const kana = p.get('kana');
+  const selectedFilterGroups = getSelectedFilterGroupsFromParams(p);
+  let list = [...characters];
+
+  if(q){
+    const key = q.toLowerCase();
+    list = list.filter(c => [c.name,c.kana,c.romaji,c.gender,...c.tags,...c.workTags].some(v => String(v).toLowerCase().includes(key)));
+  }
+
+  if(tag){
+    list = list.filter(c => c.tags.includes(tag));
+  }
+
+  if(work){
+    list = list.filter(c => c.workTags.includes(work));
+  }
+
+  Object.entries(selectedFilterGroups).forEach(([key, values]) => {
+    if(values.length){
+      list = list.filter(c => values.every(tagName => (c[`${key}Tags`] || []).includes(tagName)));
+    }
+  });
+
+  if(!excludeKana && kana && kana !== 'all'){
+    const g = KANA_GROUPS.find(x => x.key === kana);
+    list = list.filter(c => inKanaGroup(c.kana, g));
+  }
+
+  return list;
+}
+
+function getSelectedFilterGroupsFromParams(params = getParams()){
+  return {
+    gender: splitParamValues(params.get('gender')),
+    species: splitParamValues(params.get('species')),
+    job: splitParamValues(params.get('job')),
+    item: splitParamValues(params.get('item')),
+    point: splitParamValues(params.get('point'))
+  };
+}
+
+function splitParamValues(value){
+  return String(value || '')
+    .split(',')
+    .map(v => v.trim())
+    .filter(Boolean);
 }
 function sortCharacters(list){
   const select = document.querySelector('#sortSelect');
@@ -255,6 +436,7 @@ function inKanaGroup(kana, group){
 function renderCharacters(list){
   currentCharacterList = list;
   const root = document.querySelector('#characterList');
+  if(!root) return;
   root.className = currentViewMode === 'list' ? 'card-grid is-list' : 'card-grid';
 
   const pageSize = getCharacterPageSize();
@@ -264,19 +446,68 @@ function renderCharacters(list){
 
   root.innerHTML = visibleList.map(c => `
     <article class="character-card">
-      <img src="${escapeAttr(c.icon)}" alt="${escapeAttr(c.name)}のアイコン" loading="lazy">
+      <img src="${escapeAttr(getIconSrc(c))}" alt="${escapeAttr(c.name)}のアイコン" loading="lazy" onerror="this.onerror=null;this.src='${escapeAttr(getFallbackIcon(c))}';">
       <div class="card-body">
         <h3 class="character-name">${escapeHtml(c.name)}</h3>
         <p class="reading1">${escapeHtml(c.kana)}</p>
         <p class="reading2">${escapeHtml(c.romaji)}</p>
-        ${c.gender ? `<div class="tags gender-tags"><span class="tag gender-tag">${escapeHtml(c.gender)}</span></div>` : ''}
-        ${c.workTags.length ? `<div class="tags work-tags">${c.workTags.map(t => `<a class="tag work-tag" href="?work=${encodeURIComponent(t)}">${escapeHtml(t)}</a>`).join('')}</div>` : ''}
-        ${c.tags.length ? `<div class="tags">${c.tags.map(t => `<a class="tag" href="?tag=${encodeURIComponent(t)}">${escapeHtml(t)}</a>`).join('')}</div>` : ''}
+        ${renderCardTags(c, '')}
         ${c.url ? `<a class="detail-link" href="${escapeAttr(c.url)}" target="_blank" rel="noopener">管理サイトはこちら</a>` : ''}
       </div>
     </article>`).join('');
+  setupCardTagToggles(root);
   document.querySelector('#emptyMessage').hidden = list.length !== 0;
   renderCharacterMoreButton(list.length);
+}
+
+function renderCardTags(c, prefix = ''){
+  const genderParts = [];
+  const workParts = [];
+  const mainParts = [];
+
+  if(c.gender){
+    genderParts.push(`<span class="tag gender-tag">${escapeHtml(c.gender)}</span>`);
+  }
+
+  if(Array.isArray(c.workTags)){
+    c.workTags.forEach(t => workParts.push(`<a class="tag work-tag" href="${prefix}?work=${encodeURIComponent(t)}">${escapeHtml(t)}</a>`));
+  }
+
+  const displayTags = Array.isArray(c.categoryTags) && c.categoryTags.length ? c.categoryTags : (Array.isArray(c.tags) ? c.tags : []);
+  displayTags.forEach(t => mainParts.push(`<a class="tag" href="${prefix}?tag=${encodeURIComponent(t)}">${escapeHtml(t)}</a>`));
+
+  if(!genderParts.length && !workParts.length && !mainParts.length) return '';
+
+  return `
+        <div class="card-tags-wrap">
+          ${genderParts.length ? `<div class="tags card-gender-tags">${genderParts.join('')}</div>` : ''}
+          ${workParts.length ? `<div class="tags card-work-tags">${workParts.join('')}</div>` : ''}
+          ${mainParts.length ? `
+          <div class="card-main-tags-wrap">
+            <div class="tags card-main-tags is-collapsed">${mainParts.join('')}</div>
+            <button class="card-tags-toggle" type="button" hidden>さらに表示</button>
+          </div>` : ''}
+        </div>`;
+}
+
+function setupCardTagToggles(root){
+  requestAnimationFrame(() => {
+    root.querySelectorAll('.card-main-tags-wrap').forEach(wrap => {
+      const tags = wrap.querySelector('.card-main-tags');
+      const btn = wrap.querySelector('.card-tags-toggle');
+      if(!tags || !btn) return;
+
+      tags.classList.add('is-collapsed');
+      btn.textContent = 'さらに表示';
+      const needsToggle = tags.scrollHeight > tags.clientHeight + 2;
+      btn.hidden = !needsToggle;
+
+      btn.onclick = () => {
+        const isCollapsed = tags.classList.toggle('is-collapsed');
+        btn.textContent = isCollapsed ? 'さらに表示' : '閉じる';
+      };
+    });
+  });
 }
 
 function renderCharacterMoreButton(total){
@@ -345,9 +576,8 @@ function refreshCharacterVisibleCountOnResize(){
   lastGridColumnCount = newColumns;
   renderCharacters(currentCharacterList);
 }
-function renderKanaNav(active){
+function renderKanaNav(active, baseList = filterCharacters({ excludeKana:true })){
   const params = getParams();
-  const baseList = getListBeforeKanaFilter();
 
   const html = KANA_GROUPS.map(g => {
     const count = baseList.filter(c => inKanaGroup(c.kana, g)).length;
@@ -358,41 +588,116 @@ function renderKanaNav(active){
 
     return `<a class="${active===g.key?'is-active':''} ${count===0?'is-disabled':''}" href="${href}">${g.key}</a>`;
   }).join('');
-  document.querySelector('#kanaNav').innerHTML = html;
+  const kanaRoot = document.querySelector('#kanaNav');
+  if(kanaRoot) kanaRoot.innerHTML = html;
 }
 
-function getListBeforeKanaFilter(){
-  const p = getParams();
-  const q = p.get('q');
-  const tag = p.get('tag');
-  const work = p.get('work');
-  let list = [...characters];
-
-  if(q){
-    const key = q.toLowerCase();
-    list = list.filter(c => [c.name,c.kana,c.romaji,c.gender,...c.tags,...c.workTags].some(v => String(v).toLowerCase().includes(key)));
-  }
-
-  if(tag){
-    list = list.filter(c => c.tags.includes(tag));
-  }
-
-  if(work){
-    list = list.filter(c => c.workTags.includes(work));
-  }
-
-  return list;
-}
 function renderTags(){
+
   const counts = new Map();
   characters.flatMap(c=>c.tags).forEach(t => counts.set(t, (counts.get(t)||0)+1));
   const tags = [...counts.entries()].sort((a,b)=> b[1]-a[1] || a[0].localeCompare(b[0],'ja'));
-  const html = tags.map(([t,n]) => `<a href="?tag=${encodeURIComponent(t)}">${escapeHtml(t)} <span>(${n})</span></a>`).join('');
-  document.querySelector('#tagCloud').innerHTML = tags.slice(0,10).map(([t,n]) => `<a href="?tag=${encodeURIComponent(t)}">${escapeHtml(t)} <span>(${n})</span></a>`).join('');
-  document.querySelector('#allTags').innerHTML = html;
 
   renderTagSelectOptions(tags);
-  initCollapsibleSideColumns();
+  renderTagFilterGroups(characters);
+  initCollapsibleFilterGroups();
+}
+
+function renderTagFilterGroups(sourceList = characters){
+  const root = document.querySelector('#tagFilterGroups');
+  if(!root) return;
+
+  const groups = [
+    { key:'gender', field:'genderTags', title:'性別タグ' },
+    { key:'species', field:'speciesTags', title:'種族タグ' },
+    { key:'job', field:'jobTags', title:'職業タグ' },
+    { key:'item', field:'itemTags', title:'小物タグ' },
+    { key:'point', field:'pointTags', title:'ワンポイントタグ' }
+  ];
+  const selected = getSelectedFilterGroupsFromParams();
+
+  root.innerHTML = groups.map(group => {
+    const counts = new Map();
+    sourceList.flatMap(c => c[group.field] || []).forEach(tag => counts.set(tag, (counts.get(tag) || 0) + 1));
+    const selectedValues = selected[group.key] || [];
+    selectedValues.forEach(tag => {
+      if(tag && !counts.has(tag)) counts.set(tag, 0);
+    });
+    const tags = [...counts.entries()].sort((a,b) => a[0].localeCompare(b[0], 'ja'));
+    if(!tags.length) return '';
+
+    return `
+      <section class="tag-filter-group" data-filter-group="${group.key}">
+        <h3>${escapeHtml(group.title)}</h3>
+        <div class="tag-check-list">
+          ${tags.map(([tag, count]) => {
+            const id = `tag-${group.key}-${slugify(tag)}`;
+            const checked = selected[group.key]?.includes(tag) ? ' checked' : '';
+            return `<label class="tag-check" for="${escapeAttr(id)}">
+              <input id="${escapeAttr(id)}" type="checkbox" data-group="${group.key}" value="${escapeAttr(tag)}"${checked}>
+              <span>${escapeHtml(tag)}</span>
+              <small>${count}</small>
+            </label>`;
+          }).join('')}
+        </div>
+      </section>`;
+  }).join('');
+}
+
+function slugify(value){
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9぀-ヿ㐀-鿿]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'tag';
+}
+
+function initCollapsibleFilterGroups(){
+  document.querySelectorAll('.tag-filter-group .tag-check-list').forEach(list => setupCollapsibleCheckList(list));
+}
+
+function setupCollapsibleCheckList(list){
+  const group = list.closest('.tag-filter-group');
+  if(!group) return;
+
+  let btn = group.querySelector('.tag-filter-more-btn');
+  if(!btn){
+    btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'tag-filter-more-btn';
+    btn.addEventListener('click', () => {
+      const expanded = list.dataset.expanded === 'true';
+      setCheckListState(list, btn, !expanded);
+    });
+    group.appendChild(btn);
+  }
+
+  const items = [...list.querySelectorAll('.tag-check')];
+  list.style.maxHeight = '';
+
+  if(items.length <= 10){
+    list.dataset.expanded = 'true';
+    btn.hidden = true;
+    setCheckListState(list, btn, true);
+    return;
+  }
+
+  btn.hidden = false;
+  setCheckListState(list, btn, list.dataset.expanded === 'true');
+}
+
+function setCheckListState(list, btn, expand){
+  const items = [...list.querySelectorAll('.tag-check')];
+  list.dataset.expanded = expand ? 'true' : 'false';
+  list.classList.toggle('is-collapsed', !expand);
+  list.style.maxHeight = '';
+
+  items.forEach((item, index) => {
+    item.hidden = !expand && index >= 10;
+  });
+
+  btn.textContent = expand ? '閉じる' : 'もっと見る';
+  btn.setAttribute('aria-expanded', expand ? 'true' : 'false');
 }
 
 function renderTagSelectOptions(tags){
@@ -422,120 +727,48 @@ function renderTagSelectOptions(tags){
     select.value = sortedTagNames.includes(currentValue) ? currentValue : '';
   });
 
-  const currentTag = getParams().get('tag') || '';
-  syncSearchControls(getParams().get('q') || '', currentTag);
+  syncSearchControls(getParams().get('q') || '', getSelectedFilterGroupsFromParams());
 }
 
-function syncSearchControls(q, tag){
-  ['#searchInput', '#sideSearchInput'].forEach(selector => {
+function syncSearchControls(q, selectedFilterGroups = getSelectedFilterGroupsFromParams()){
+  ['#sideSearchInput'].forEach(selector => {
     const input = document.querySelector(selector);
     if(input && input.value !== q) input.value = q;
   });
 
-  ['#tagSelect'].forEach(selector => {
-    const select = document.querySelector(selector);
-    if(select && select.value !== tag) select.value = tag;
+
+  document.querySelectorAll('#tagFilterGroups input[type="checkbox"]').forEach(input => {
+    const key = input.dataset.group;
+    const shouldCheck = Boolean(selectedFilterGroups[key]?.includes(input.value));
+    if(input.checked !== shouldCheck) input.checked = shouldCheck;
   });
 }
 
-function initCollapsibleSideColumns(){
-  setupCollapsibleTagCloud('#tagCloud');
-  setupCollapsibleTagCloud('#allTags');
+
+function normalizeIconPath(icon, romaji = ''){
+  const raw = normalizeTextValue(icon);
+  if(raw) return raw.replace(/^\.\//, '');
+  const slug = slugifyRomaji(romaji);
+  return slug ? `image/${slug}.png` : '';
 }
 
-function setupCollapsibleTagCloud(selector){
-  const cloud = document.querySelector(selector);
-  if(!cloud) return;
-
-  let wrap = cloud.closest('.collapsible-wrap');
-  if(!wrap){
-    wrap = document.createElement('div');
-    wrap.className = 'collapsible-wrap';
-    cloud.parentNode.insertBefore(wrap, cloud);
-    wrap.appendChild(cloud);
-  }
-
-  let btn = wrap.querySelector('.tag-more-btn');
-  if(!btn){
-    btn = document.createElement('button');
-    btn.className = 'tag-more-btn';
-    btn.type = 'button';
-    btn.addEventListener('click', () => {
-      const expanded = cloud.dataset.expanded === 'true';
-      setTagCloudState(cloud, btn, !expanded);
-    });
-    wrap.appendChild(btn);
-  }
-
-  const limit = getSixRowLimit(cloud);
-  if(!limit){
-    cloud.classList.remove('is-collapsed');
-    cloud.style.maxHeight = '';
-    cloud.dataset.expanded = 'true';
-    btn.hidden = true;
-    return;
-  }
-
-  cloud.dataset.limitHeight = String(limit);
-  btn.hidden = false;
-  setTagCloudState(cloud, btn, cloud.dataset.expanded === 'true');
+function slugifyRomaji(value){
+  return String(value || '')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
-function getSixRowLimit(cloud){
-  const children = [...cloud.children];
-  if(!children.length) return null;
-
-  // 計測前にいったん全表示へ戻す。
-  // offsetTop は親要素や折り返し条件でズレることがあるため、
-  // getBoundingClientRect() でタグクラウド自身を基準に6行目の下端を測る。
-  cloud.classList.remove('is-collapsed');
-  cloud.style.maxHeight = '';
-  cloud.style.height = '';
-
-  const cloudRect = cloud.getBoundingClientRect();
-  const rowTops = [];
-
-  children.forEach(el => {
-    const rect = el.getBoundingClientRect();
-    const top = Math.round(rect.top - cloudRect.top);
-    if(!rowTops.some(rowTop => Math.abs(rowTop - top) <= 2)){
-      rowTops.push(top);
-    }
-  });
-
-  rowTops.sort((a,b) => a - b);
-  if(rowTops.length <= 6) return null;
-
-  const sixthRowTop = rowTops[5];
-  const sixthRowItems = children.filter(el => {
-    const rect = el.getBoundingClientRect();
-    const top = Math.round(rect.top - cloudRect.top);
-    return Math.abs(top - sixthRowTop) <= 2;
-  });
-
-  const bottom = Math.max(...sixthRowItems.map(el => {
-    const rect = el.getBoundingClientRect();
-    return Math.ceil(rect.bottom - cloudRect.top);
-  }));
-
-  return bottom;
+function getIconSrc(c){
+  return c?.icon || getFallbackIcon(c);
 }
 
-function setTagCloudState(cloud, btn, expand){
-  cloud.dataset.expanded = expand ? 'true' : 'false';
-  cloud.classList.toggle('is-collapsed', !expand);
-  if(expand){
-    cloud.style.maxHeight = '';
-    cloud.style.height = '';
-  }else{
-    const h = `${cloud.dataset.limitHeight}px`;
-    cloud.style.maxHeight = h;
-    // 高さは固定しない。max-heightだけで6行を超えた分を隠すことで、
-    // タグが少ない時や行が少ない時に枠だけが不自然に伸びるのを防ぐ。
-    cloud.style.height = '';
-  }
-  btn.textContent = expand ? '閉じる' : 'もっと見る';
-  btn.setAttribute('aria-expanded', expand ? 'true' : 'false');
+function getFallbackIcon(c){
+  return 'assets/人物のアイコン.png';
 }
 
 function debounce(fn, delay){

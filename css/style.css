@@ -190,6 +190,8 @@ select,.search-box input{
 }
 
 .search-box button,.button{
+  display: inline-flex;
+  align-items: center;
   height:44px;
   border:0;
   border-radius:12px;
@@ -999,5 +1001,817 @@ select,.search-box input{
     height:100%;
     min-width:0;
     max-width:none
+  }
+}
+
+/* ===== Category tag search sidebar ===== */
+.search-panel{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.search-panel h2{
+  margin-bottom:0;
+}
+
+.side-search-box{
+  width:100%;
+}
+
+.side-search-box input{
+  width:100%;
+}
+
+.tag-filter-groups{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.tag-filter-group{
+  padding-top:14px;
+  border-top:1px solid var(--line);
+}
+
+.tag-filter-group h3{
+  margin:0 0 10px;
+  font-size:14px;
+  color:var(--text);
+}
+
+.tag-check-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  overflow:hidden;
+}
+
+.tag-check{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-height:30px;
+  padding:6px 8px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.tag-check input{
+  flex:0 0 auto;
+  accent-color:var(--primary);
+}
+
+.tag-check span{
+  flex:1;
+  min-width:0;
+}
+
+.tag-check small{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.tag-check:hover{
+  background:var(--primary-2);
+}
+
+.tag-filter-more-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:34px;
+  margin:10px auto 0;
+  padding:0 14px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:#fff;
+  color:var(--primary);
+  font-weight:800;
+  cursor:pointer;
+}
+
+.tag-filter-more-btn[hidden]{
+  display:none;
+}
+
+.tag-filter-more-btn:hover{
+  background:var(--primary-2);
+}
+
+.hero-search button,
+.side-search-box button{
+  display:none;
+}
+
+/* ===== Update: search UI is consolidated into the right column ===== */
+.hero-actions,
+.hero-search{
+  display:none !important;
+}
+
+.side-kana-block{
+  padding-top:14px;
+  border-top:1px solid var(--line);
+}
+
+.side-subhead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+.side-subhead h3{
+  margin:0;
+  font-size:14px;
+}
+
+.side-subhead a{
+  font-size:12px;
+  font-weight:800;
+  color:var(--primary);
+  text-decoration:none;
+  white-space:nowrap;
+}
+
+.side-kana-nav{
+  margin-top:0;
+}
+
+.side-kana-nav a{
+  min-width:38px;
+}
+
+.search-panel{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.search-panel h2{
+  margin-bottom:0;
+}
+
+.side-search-box{
+  margin:0;
+}
+
+/* 性別タグは検索ボックス直下に来るため、最初のグループだけ余白を少し抑える */
+.tag-filter-group:first-child{
+  padding-top:0;
+  border-top:0;
+}
+
+/* Fix: category tag filters collapse by item count, not by height. */
+.tag-check[hidden]{
+  display:none !important;
+}
+.tag-check-list.is-collapsed{
+  max-height:none !important;
+  overflow:visible;
+}
+
+/* ===== Layout update: hero/banners full width, search column aligned with character list ===== */
+.page-layout{
+  max-width:1360px;
+  margin:0 auto;
+  padding:24px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.content-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 340px;
+  gap:24px;
+  align-items:start;
+}
+
+.content-layout .main-column{
+  display:block;
+}
+
+.content-layout .main-column > .panel{
+  margin:0;
+}
+
+.content-layout .side-column{
+  align-self:start;
+}
+
+/* 4 banners: terms / request / random / guide */
+.banner-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  align-items:stretch;
+}
+
+.info-banner{
+  min-height:200px;
+}
+
+.guide-card::before{
+  background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(231,252,244,.86));
+}
+
+.guide-card .info-banner__label,
+.guide-card h2{
+  color:#158464;
+}
+
+.guide-card .info-banner__button{
+  background:#158464;
+}
+
+/* keep search panel head aligned with character list head */
+.search-panel{
+  margin-top:0;
+}
+
+.guide-layout code{
+  display:inline-block;
+  padding:.1em .45em;
+  border-radius:6px;
+  background:var(--primary-2);
+  color:var(--primary);
+  font-weight:700;
+}
+
+.guide-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+@media (max-width: 1180px){
+  .banner-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media (max-width: 980px){
+  .content-layout{
+    grid-template-columns:1fr;
+  }
+}
+
+@media (max-width: 760px){
+  .page-layout{
+    padding:12px;
+  }
+
+  .banner-grid{
+    grid-template-columns:1fr;
+  }
+
+  .info-banner{
+    min-height:auto;
+  }
+}
+
+@media (max-width: 640px){
+  .guide-actions .button{
+    width:100%;
+  }
+}
+
+/* ===== Character card tag folding and full-width management button ===== */
+.character-card{
+  display:flex;
+  flex-direction:column;
+}
+
+.character-card .card-body{
+  display:flex;
+  flex-direction:column;
+  flex:1;
+}
+
+.card-tags-wrap{
+  margin-top:6px;
+}
+
+.card-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  overflow:visible;
+}
+
+.card-tags.is-collapsed{
+  max-height:30px;
+  overflow:hidden;
+}
+
+.card-tags-toggle{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:var(--primary);
+  font-size:12px;
+  font-weight:800;
+  padding:6px 0 0;
+  cursor:pointer;
+}
+
+.card-tags-toggle:hover{
+  text-decoration:underline;
+}
+
+.card-tags-toggle[hidden]{
+  display:none;
+}
+
+.detail-link{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  min-height:42px;
+  margin-top:auto;
+  padding:10px 14px;
+  border-radius:12px;
+  background:var(--primary);
+  color:#fff;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:800;
+  box-shadow:0 8px 18px rgba(94,113,228,.18);
+}
+
+.detail-link:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 22px rgba(94,113,228,.25);
+}
+
+.card-tags-wrap + .detail-link{
+  margin-top:12px;
+}
+
+.card-grid.is-list .character-card{
+  display:grid;
+}
+
+.card-grid.is-list .character-card .card-body{
+  min-height:100%;
+}
+
+/* ===== Card tag groups: meta line + collapsible category line ===== */
+.card-tags-wrap{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-top:8px;
+  margin-bottom:12px;
+}
+
+.card-gender-tags,
+.card-work-tags,
+.card-main-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.card-main-tags{
+  overflow:visible;
+}
+
+.card-main-tags.is-collapsed{
+  max-height:30px;
+  overflow:hidden;
+}
+
+.card-main-tags-wrap{
+  min-width:0;
+}
+
+.character-card .card-body{
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  min-height:0;
+}
+
+.character-card .detail-link,
+.card-tags-wrap + .detail-link{
+  margin-top:auto;
+}
+
+.card-tags-toggle{
+  align-self:flex-start;
+}
+
+
+/* ===== Mobile search drawer ===== */
+.mobile-search-toggle{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  width:42px;
+  height:42px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:#fff;
+  color:var(--primary);
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 8px 18px rgba(30,56,120,.08);
+}
+
+
+
+.mobile-search-toggle img{
+  display:block;
+  width:22px;
+  height:22px;
+  object-fit:contain;
+}
+
+.mobile-search-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:40;
+  background:rgba(12,27,77,.32);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease;
+}
+
+.mobile-search-backdrop.is-open{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.search-panel-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.search-panel-head h2{
+  margin:0;
+}
+
+.mobile-search-close{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  width:36px;
+  height:36px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:#fff;
+  color:var(--primary);
+  font-size:22px;
+  line-height:1;
+  font-weight:900;
+  cursor:pointer;
+}
+
+@media (max-width: 760px){
+  .site-header{
+    gap:10px;
+  }
+
+  .brand{
+    min-width:0;
+  }
+
+  .brand span:last-child{
+    min-width:0;
+  }
+
+  .brand strong{
+    display:block;
+    max-width:58vw;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .mobile-search-toggle{
+    display:flex;
+    flex:0 0 auto;
+  }
+
+  .content-layout{
+    display:block;
+  }
+
+  .content-layout .side-column{
+    position:fixed;
+    top:0;
+    right:0;
+    z-index:50;
+    width:min(70vw, 360px);
+    max-width:calc(100vw - 44px);
+    height:100dvh;
+    padding:14px;
+    overflow-y:auto;
+    background:var(--bg);
+    transform:translateX(105%);
+    transition:transform .24s ease;
+    box-shadow:-16px 0 32px rgba(12,27,77,.18);
+  }
+
+  .content-layout .side-column.is-open{
+    transform:translateX(0);
+  }
+
+  .content-layout .side-column .search-panel{
+    min-height:100%;
+    margin:0;
+  }
+
+  .mobile-search-close{
+    display:flex;
+    flex:0 0 auto;
+  }
+
+  body.mobile-search-open{
+    overflow:hidden;
+  }
+
+  .detail-link{
+    min-height:38px;
+    padding:9px 10px;
+    font-size:12px;
+    white-space:nowrap;
+    letter-spacing:-.02em;
+  }
+}
+
+@media (max-width: 420px){
+  .content-layout .side-column{
+    width:74vw;
+    max-width:calc(100vw - 32px);
+    padding:12px;
+  }
+
+  .detail-link{
+    font-size:11px;
+  }
+}
+
+
+/* ===== Mobile search drawer layout fix ===== */
+@media (max-width: 760px){
+  .content-layout .side-column{
+    background:#fff;
+  }
+
+  .content-layout .side-column .search-panel{
+    min-height:auto;
+    padding:0;
+    background:transparent;
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+  }
+
+  .search-panel-head{
+    position:sticky;
+    top:0;
+    z-index:2;
+    padding:2px 0 12px;
+    margin-bottom:12px;
+    background:#fff;
+    border-bottom:1px solid var(--line);
+  }
+
+  .search-panel-head h2{
+    margin:0;
+    padding-right:8px;
+    font-size:18px;
+    line-height:1.35;
+  }
+
+  .mobile-search-close{
+    position:static;
+    flex:0 0 36px;
+  }
+
+  .side-search-box{
+    display:flex;
+    width:100%;
+    max-width:none;
+    margin:0 0 16px;
+  }
+
+  .side-search-box input{
+    width:100%;
+    min-width:0;
+  }
+
+  .side-kana-block,
+  .tag-filter-groups{
+    padding:0;
+    margin:0;
+    background:transparent;
+    border:0;
+    box-shadow:none;
+  }
+
+  .tag-filter-group{
+    padding-top:14px;
+  }
+}
+
+/* ===== Fix: tag filter more button matches card tag toggle ===== */
+.tag-filter-more-btn{
+  appearance:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  min-height:auto;
+  margin:8px 0 0;
+  padding:6px 0 0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:var(--primary);
+  font-size:12px;
+  font-weight:800;
+  line-height:1.4;
+  box-shadow:none;
+  cursor:pointer;
+}
+
+.tag-filter-more-btn:hover{
+  background:transparent;
+  text-decoration:underline;
+  transform:none;
+}
+
+/* ===== Fix: use search drawer whenever right column drops below main column ===== */
+@media (max-width: 980px){
+  .site-header{
+    gap:10px;
+  }
+
+  .brand{
+    min-width:0;
+  }
+
+  .brand span:last-child{
+    min-width:0;
+  }
+
+  .brand strong{
+    display:block;
+    max-width:58vw;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .mobile-search-toggle{
+    display:flex;
+    flex:0 0 auto;
+  }
+
+  .content-layout{
+    display:block;
+  }
+
+  .content-layout .side-column{
+    position:fixed;
+    top:0;
+    right:0;
+    z-index:50;
+    width:min(70vw, 360px);
+    max-width:calc(100vw - 44px);
+    height:100dvh;
+    padding:14px;
+    overflow-y:auto;
+    background:#fff;
+    transform:translateX(105%);
+    transition:transform .24s ease;
+    box-shadow:-16px 0 32px rgba(12,27,77,.18);
+  }
+
+  .content-layout .side-column.is-open{
+    transform:translateX(0);
+  }
+
+  .content-layout .side-column .search-panel{
+    min-height:auto;
+    margin:0;
+    padding:0;
+    background:transparent;
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+  }
+
+  .search-panel-head{
+    position:sticky;
+    top:0;
+    z-index:2;
+    padding:2px 0 12px;
+    margin-bottom:12px;
+    background:#fff;
+    border-bottom:1px solid var(--line);
+  }
+
+  .mobile-search-close{
+    display:flex;
+    flex:0 0 36px;
+  }
+
+  .side-search-box{
+    display:flex;
+    width:100%;
+    max-width:none;
+    margin:0 0 16px;
+  }
+
+  .side-search-box input{
+    width:100%;
+    min-width:0;
+  }
+
+  .side-kana-block,
+  .tag-filter-groups{
+    padding:0;
+    margin:0;
+    background:transparent;
+    border:0;
+    box-shadow:none;
+  }
+
+  body.mobile-search-open{
+    overflow:hidden;
+  }
+}
+
+@media (max-width: 420px){
+  .content-layout .side-column{
+    width:74vw;
+    max-width:calc(100vw - 32px);
+    padding:12px;
+  }
+}
+
+
+/* ===== Fix random gacha card layout and single fallback icon ===== */
+.random-result{
+  display:flex;
+  justify-content:center;
+}
+
+.random-card.character-card{
+  display:grid;
+  grid-template-columns:minmax(220px, 280px) minmax(0, 1fr);
+  align-items:stretch;
+  width:100%;
+  max-width:860px;
+  min-height:280px;
+}
+
+.random-card.character-card > img{
+  width:100%;
+  height:100%;
+  min-height:280px;
+  aspect-ratio:1 / 1;
+  object-fit:cover;
+  align-self:stretch;
+}
+
+.random-card.character-card .card-body{
+  min-width:0;
+  padding:24px;
+}
+
+.random-card.character-card .detail-link{
+  margin-top:auto;
+}
+
+@media (max-width: 640px){
+  .random-card.character-card{
+    display:flex;
+    flex-direction:column;
+    max-width:100%;
+    min-height:0;
+  }
+
+  .random-card.character-card > img{
+    width:100%;
+    height:auto;
+    min-height:0;
+    aspect-ratio:1 / 1;
+  }
+
+  .random-card.character-card .card-body{
+    padding:16px;
   }
 }

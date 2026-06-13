@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>キャラクターデータベース</title>
-  <link rel="stylesheet" href="css/style.css?v=20260611-gender-github-fix2" />
+  <link rel="stylesheet" href="css/style.css?v=random-card-fallback-20260613" />
 </head>
 <body>
 <header class="site-header">
@@ -14,64 +14,57 @@
   </a>
   <nav class="nav">
     <a href="./">ホーム</a>
-    <a href="?view=tags">タグ一覧</a>
+    <a href="guide.html">使い方</a>
     <a href="terms.html">利用規約</a>
-    <a class="social-link" href="https://x.com/hoshikawa_02" target="_blank">　X　</a>
-    <a class="social-link" href="https://bsky.app/profile/hoshikawa-02.bsky.social" target="_blank">Bluesky</a>
+    <a class="social-link" href="https://x.com/hoshikawa_02" target="_blank" rel="noopener">X</a>
+    <a class="social-link" href="https://bsky.app/profile/hoshikawa-02.bsky.social" target="_blank" rel="noopener">Bluesky</a>
   </nav>
+  <button id="mobileSearchToggle" class="mobile-search-toggle" type="button" aria-controls="sideSearchDrawer" aria-expanded="false" aria-label="検索メニューを開く"><img src="image/虫眼鏡アイコン.png" alt="" aria-hidden="true"></button>
 </header>
+<div id="mobileSearchBackdrop" class="mobile-search-backdrop" hidden></div>
 
-<main class="layout">
-  <section class="main-column">
-    <section class="hero">
-      <div class="hero-content">
-        <h1>UTAUキャラクター<br>アイコン配布所</h1>
-        <p>nyaruruが作成しているアイコンを配布しています。<br>
-          利用規約をお読みいただいてからご利用ください。
-        </p>
-        <div class="hero-actions">
-          <form id="searchForm" class="search-box hero-search">
-            <select id="tagSelect" class="tag-select" aria-label="タグを指定">
-              <option value="">すべてのタグ</option>
-            </select>
-            <input id="searchInput" type="search" placeholder="キャラクター名・読み・ローマ字で検索" autocomplete="off" />
-            <button type="submit">検索</button>
-          </form>
-        </div>
-      </div>
-    </section>
+<main class="page-layout">
+  <section class="hero">
+    <div class="hero-content">
+      <h1>UTAUキャラクター<br>アイコン配布所</h1>
+      <p>nyaruruが作成しているUTAUアイコンを配布しています。<br>
+        利用規約をお読みいただいてからご利用ください。</p>
+    </div>
+  </section>
 
-    <section class="banner-grid" aria-label="お知らせ">
-      <a class="info-banner terms-card" href="terms.html">
-        <p class="info-banner__label">TERMS</p>
-        <h2>利用規約</h2>
-        <p>アイコンの使用条件や注意事項を確認できます。ご利用前に必ずご確認ください。</p>
-        <span class="info-banner__button">詳しく見る</span>
-      </a>
+  <section class="banner-grid" aria-label="お知らせ">
+    <a class="info-banner terms-card" href="terms.html">
+      <p class="info-banner__label">TERMS</p>
+      <h2>利用規約</h2>
+      <p>アイコンの使用条件や注意事項を確認できます。ご利用前に必ずご確認ください。</p>
+      <span class="info-banner__button">詳しく見る</span>
+    </a>
 
-      <a class="info-banner request-card" href="https://forms.gle/9vvBzFXPDtwV5AX57" target="_blank" rel="noopener">
-        <p class="info-banner__label">REQUEST</p>
-        <h2>リクエスト募集</h2>
-        <p>掲載してほしいキャラクターアイコンがある場合は、フォームからお知らせください。</p>
-        <span class="info-banner__button">リクエストする</span>
-      </a>
+    <a class="info-banner guide-card" href="guide.html">
+      <p class="info-banner__label">GUIDE</p>
+      <h2>使い方・仕様</h2>
+      <p>検索方法、タグの見方、並び替えなどサイトの使い方を確認できます。</p>
+      <span class="info-banner__button">使い方を見る</span>
+    </a>
 
-      <a class="info-banner gacha-card" href="random.html">
-        <p class="info-banner__label">RANDOM</p>
-        <h2>ランダムガチャ</h2>
-        <p>登録キャラクターの中からランダムで1件を表示します。</p>
-        <span class="info-banner__button">ガチャを引く</span>
-      </a>
-    </section>
+    <a class="info-banner request-card" href="https://forms.gle/9vvBzFXPDtwV5AX57" target="_blank" rel="noopener">
+      <p class="info-banner__label">REQUEST</p>
+      <h2>リクエスト募集</h2>
+      <p>掲載してほしいキャラクターアイコンがある場合は、フォームからお知らせください。</p>
+      <span class="info-banner__button">リクエストする</span>
+    </a>
 
-    <section class="panel">
-      <div class="section-head">
-        <h2>50音から探す</h2>
-        <a href="?kana=all">一覧で見る</a>
-      </div>
-      <div id="kanaNav" class="kana-nav"></div>
-    </section>
+    <a class="info-banner gacha-card" href="random.html">
+      <p class="info-banner__label">RANDOM</p>
+      <h2>ランダムガチャ</h2>
+      <p>登録キャラクターの中からランダムで1件を表示します。</p>
+      <br>
+      <span class="info-banner__button">ガチャを引く</span>
+    </a>
+  </section>
 
+  <section class="content-layout" id="characters">
+    <section class="main-column">
     <section class="panel">
       <div class="section-head">
         <div>
@@ -92,26 +85,32 @@
       <div id="characterList" class="card-grid"></div>
       <div id="emptyMessage" class="empty" hidden>該当するキャラクターが見つかりませんでした。</div>
     </section>
-  </section>
+    </section>
 
-  <aside class="side-column">
-    <section class="panel compact">
-      <h2>キャラクター検索</h2>
+  <aside class="side-column" id="sideSearchDrawer" aria-label="キャラクター検索">
+    <section class="panel compact search-panel">
+      <div class="search-panel-head">
+        <h2>キャラクター検索</h2>
+        <button id="mobileSearchClose" class="mobile-search-close" type="button" aria-label="検索メニューを閉じる">×</button>
+      </div>
       <form id="sideSearchForm" class="search-box small side-search-box">
         <input id="sideSearchInput" type="search" placeholder="名前・読み・ローマ字で検索" autocomplete="off" />
-        <button type="submit">検索</button>
       </form>
-      <h3>人気のタグ</h3>
-      <div id="tagCloud" class="tag-cloud"></div>
+      <section class="side-kana-block">
+        <div class="side-subhead">
+          <h3>50音から探す</h3>
+          <a id="kanaAllLink" href="?kana=all">一覧で見る</a>
+        </div>
+        <div id="kanaNav" class="kana-nav side-kana-nav"></div>
+      </section>
+      <div id="tagFilterGroups" class="tag-filter-groups"></div>
     </section>
-    <section class="panel compact" id="tagsPanel">
-      <h2>タグ一覧</h2>
-      <div id="allTags" class="tag-cloud"></div>
-    </section>
+
   </aside>
+  </section>
 </main>
 
 <footer class="footer">© nyaruru</footer>
-<script src="js/app.js?v=20260611-gender-github-fix2"></script>
+<script src="js/app.js?v=random-card-fallback-20260613"></script>
 </body>
 </html>
