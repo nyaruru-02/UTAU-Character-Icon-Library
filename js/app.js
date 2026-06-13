@@ -6,6 +6,17 @@ const KANA_GROUPS = [
   { key:'ま', chars:['ま','み','む','め','も'] }, { key:'や', chars:['や','ゆ','よ'] },
   { key:'ら', chars:['ら','り','る','れ','ろ'] }, { key:'わ', chars:['わ','を','ん'] }, { key:'他', chars:[] }
 ];
+
+// 検索コラムのタググループ表示順です。
+// GitHub Pagesで古い順番が残らないよう、HTML側のJSバージョンも更新しています。
+// 並びを変えたい場合は、この配列の順番を変更してください。
+const TAG_FILTER_GROUPS = [
+  { key:'gender', field:'genderTags', title:'性別タグ' },
+  { key:'species', field:'speciesTags', title:'種族タグ' },
+  { key:'point', field:'pointTags', title:'身体的特徴タグ' },
+  { key:'item', field:'itemTags', title:'小物タグ' },
+  { key:'job', field:'jobTags', title:'職業タグ' }
+];
 let characters = [];
 let currentViewMode = 'grid';
 let visibleCharacterCount = 0;
@@ -607,14 +618,7 @@ function renderTagFilterGroups(sourceList = characters){
   const root = document.querySelector('#tagFilterGroups');
   if(!root) return;
 
-  const groups = [
-    { key:'gender', field:'genderTags', title:'性別タグ' },
-    { key:'species', field:'speciesTags', title:'種族タグ' },
-    { key:'point', field:'pointTags', title:'身体的特徴タグ' },
-    { key:'item', field:'itemTags', title:'小物タグ' },
-    { key:'job', field:'jobTags', title:'職業タグ' }
-  
-  ];
+  const groups = TAG_FILTER_GROUPS;
   const selected = getSelectedFilterGroupsFromParams();
 
   root.innerHTML = groups.map(group => {
