@@ -3204,5 +3204,19 @@
     "職業タグ": "吟遊詩人",
     "小物タグ": "",
     "ワンポイントタグ": ""
+  },
+  {
+    "id": 230,
+    "name": "主音サラサ",
+    "kana": "あるじね さらさ",
+    "romaji": "Arujine Sarasa",
+    "icon": "image/arujine-sarasa.png",
+    "url": "https://arujinesarasa.wixsite.com/official",
+    "workTags": "#主音サラサ",
+    "gender": "男性",
+    "種族タグ": "狼",
+    "職業タグ": "",
+    "小物タグ": "ピアス|首輪",
+    "ワンポイントタグ": "ケモ耳|尻尾"
   }
 ]
