@@ -1337,12 +1337,11 @@ select,.search-box input{
   margin-top:auto;
   padding:10px 14px;
   border-radius:12px;
-  background:var(--primary);
-  color:#fff;
+  background:#eeeef4;
+  color:var(--primary);
   text-decoration:none;
   font-size:13px;
   font-weight:800;
-  box-shadow:0 8px 18px rgba(94,113,228,.18);
 }
 
 .detail-link:hover{
