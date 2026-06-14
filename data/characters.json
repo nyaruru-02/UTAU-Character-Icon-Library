@@ -3162,5 +3162,33 @@
     "職業タグ": "",
     "小物タグ": "",
     "ワンポイントタグ": ""
+  },
+  {
+    "id": 227,
+    "name": "いるやるい",
+    "kana": "いるや るい",
+    "romaji": "Iruya Rui",
+    "icon": "image/iruya-rui.png",
+    "url": "https://lclcofficial6565.wixsite.com/lclc",
+    "workTags": "#LCLCみてみて",
+    "gender": "女性",
+    "種族タグ": "バーチャル",
+    "職業タグ": "オタク",
+    "小物タグ": "イヤーユニット|鍵",
+    "ワンポイントタグ": "グラデーションカラー"
+  },
+  {
+    "id": 228,
+    "name": "刃華音メタ",
+    "kana": "はがね めた",
+    "romaji": "​Hagane Meta",
+    "icon": "image/​hagane-meta.png",
+    "url": "​https://kagerou009.hatenablog.com",
+    "workTags": "#夕焼け研究所",
+    "gender": "女性",
+    "種族タグ": "人間",
+    "職業タグ": "",
+    "小物タグ": "ヘッドホン",
+    "ワンポイントタグ": ""
   }
 ]
