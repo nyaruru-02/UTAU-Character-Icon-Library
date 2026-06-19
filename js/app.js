@@ -1,4 +1,5 @@
 const DATA_URL = new URL('../data/characters.json', document.currentScript.src).href;
+// GitHub Pages cache/update note: motif tag filtering is included in URL params and checkbox state.
 const KANA_GROUPS = [
   { key:'あ', chars:['あ','い','う','え','お'] }, { key:'か', chars:['か','き','く','け','こ','が','ぎ','ぐ','げ','ご'] },
   { key:'さ', chars:['さ','し','す','せ','そ','ざ','じ','ず','ぜ','ぞ'] }, { key:'た', chars:['た','ち','つ','て','と','だ','ぢ','づ','で','ど'] },
@@ -255,7 +256,7 @@ function applySearchFromControls(sourceInput = null){
   const q = (sourceInput?.matches?.('input[type="search"]') ? sourceInput.value : (document.querySelector('#sideSearchInput')?.value || '')).trim();
   const params = new URLSearchParams(location.search);
 
-  ['q','tag','gender','species','job','item','point','view'].forEach(key => params.delete(key));
+  ['q','tag','gender','species','motif','job','item','point','view'].forEach(key => params.delete(key));
   if(q) params.set('q', q);
 
   const selectedGroups = getSelectedFilterGroupsFromDom();
@@ -268,7 +269,7 @@ function applySearchFromControls(sourceInput = null){
 }
 
 function getSelectedFilterGroupsFromDom(){
-  const groups = { gender:[], species:[], job:[], item:[], point:[] };
+  const groups = { gender:[], species:[], motif:[], job:[], item:[], point:[] };
   document.querySelectorAll('#tagFilterGroups input[type="checkbox"]:checked').forEach(input => {
     const key = input.dataset.group;
     if(groups[key]) groups[key].push(input.value);
@@ -394,6 +395,7 @@ function getSelectedFilterGroupsFromParams(params = getParams()){
   return {
     gender: splitParamValues(params.get('gender')),
     species: splitParamValues(params.get('species')),
+    motif: splitParamValues(params.get('motif')),
     job: splitParamValues(params.get('job')),
     item: splitParamValues(params.get('item')),
     point: splitParamValues(params.get('point'))
