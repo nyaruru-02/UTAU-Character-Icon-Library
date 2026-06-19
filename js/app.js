@@ -1,5 +1,5 @@
 const DATA_URL = new URL('../data/characters.json', document.currentScript.src).href;
-// GitHub Pages cache/update note: motif tag filtering is included in URL params and checkbox state.
+// GitHub Pages cache/update note: motif tag filtering is included in URL params and checkbox state. version: full-20260619-2
 const KANA_GROUPS = [
   { key:'あ', chars:['あ','い','う','え','お'] }, { key:'か', chars:['か','き','く','け','こ','が','ぎ','ぐ','げ','ご'] },
   { key:'さ', chars:['さ','し','す','せ','そ','ざ','じ','ず','ぜ','ぞ'] }, { key:'た', chars:['た','ち','つ','て','と','だ','ぢ','づ','で','ど'] },
@@ -19,6 +19,14 @@ const TAG_FILTER_GROUPS = [
   { key:'item', field:'itemTags', title:'小物タグ' },
   { key:'job', field:'jobTags', title:'職業タグ' }
 ];
+function getFilterGroupKeys(){
+  return TAG_FILTER_GROUPS.map(group => group.key);
+}
+
+function createEmptySelectedFilterGroups(){
+  return Object.fromEntries(getFilterGroupKeys().map(key => [key, []]));
+}
+
 let characters = [];
 let currentViewMode = 'grid';
 let visibleCharacterCount = 0;
@@ -256,7 +264,9 @@ function applySearchFromControls(sourceInput = null){
   const q = (sourceInput?.matches?.('input[type="search"]') ? sourceInput.value : (document.querySelector('#sideSearchInput')?.value || '')).trim();
   const params = new URLSearchParams(location.search);
 
-  ['q','tag','gender','species','motif','job','item','point','view'].forEach(key => params.delete(key));
+  // 検索コラムのチェックボックスは TAG_FILTER_GROUPS に定義したキーをすべてURLへ反映します。
+  // モチーフタグなど、後から追加したグループもここで自動的に処理されます。
+  ['q','tag','work','view', ...getFilterGroupKeys()].forEach(key => params.delete(key));
   if(q) params.set('q', q);
 
   const selectedGroups = getSelectedFilterGroupsFromDom();
@@ -269,11 +279,15 @@ function applySearchFromControls(sourceInput = null){
 }
 
 function getSelectedFilterGroupsFromDom(){
-  const groups = { gender:[], species:[], motif:[], job:[], item:[], point:[] };
+  const groups = createEmptySelectedFilterGroups();
+
   document.querySelectorAll('#tagFilterGroups input[type="checkbox"]:checked').forEach(input => {
     const key = input.dataset.group;
-    if(groups[key]) groups[key].push(input.value);
+    if(Object.prototype.hasOwnProperty.call(groups, key)){
+      groups[key].push(input.value);
+    }
   });
+
   return groups;
 }
 function navigate(url, options = {}){
@@ -392,14 +406,13 @@ function filterCharacters(options = {}){
 }
 
 function getSelectedFilterGroupsFromParams(params = getParams()){
-  return {
-    gender: splitParamValues(params.get('gender')),
-    species: splitParamValues(params.get('species')),
-    motif: splitParamValues(params.get('motif')),
-    job: splitParamValues(params.get('job')),
-    item: splitParamValues(params.get('item')),
-    point: splitParamValues(params.get('point'))
-  };
+  const groups = createEmptySelectedFilterGroups();
+
+  getFilterGroupKeys().forEach(key => {
+    groups[key] = splitParamValues(params.get(key));
+  });
+
+  return groups;
 }
 
 function splitParamValues(value){
