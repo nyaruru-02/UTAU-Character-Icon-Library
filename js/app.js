@@ -13,6 +13,7 @@ const KANA_GROUPS = [
 const TAG_FILTER_GROUPS = [
   { key:'gender', field:'genderTags', title:'性別タグ' },
   { key:'species', field:'speciesTags', title:'種族タグ' },
+  { key:'motif', field:'motifTags', title:'モチーフタグ' },
   { key:'point', field:'pointTags', title:'身体的特徴タグ' },
   { key:'item', field:'itemTags', title:'小物タグ' },
   { key:'job', field:'jobTags', title:'職業タグ' }
@@ -69,9 +70,10 @@ function normalizeCharacter(row, index){
   const speciesTags = collectTagsFromFields(row, ['speciesTags','species_tags','SpeciesTags','raceTags','race_tags','種族タグ','種族']);
   const jobTags = collectTagsFromFields(row, ['jobTags','job_tags','JobTags','occupationTags','occupation_tags','職業タグ','職業']);
   const itemTags = collectTagsFromFields(row, ['itemTags','item_tags','ItemTags','accessoryTags','accessory_tags','小物タグ','小物']);
+  const motifTags = collectTagsFromFields(row, ['motifTags','motif_tags','MotifTags','themeTags','theme_tags','モチーフタグ','モチーフ']);
   const pointTags = collectTagsFromFields(row, ['pointTags','point_tags','PointTags','featureTags','feature_tags','onePointTags','one_point_tags','ワンポイントタグ','特徴タグ','特徴']);
   const normalTags = collectTagsFromFields(row, ['tags','tag','Tags','Tag','characterTags','character_tags','normalTags','normal_tags','タグ','通常タグ']);
-  const categoryTags = uniqueTags([...speciesTags, ...jobTags, ...itemTags, ...pointTags]);
+  const categoryTags = uniqueTags([...speciesTags, ...motifTags, ...jobTags, ...itemTags, ...pointTags]);
   const allCharacterTags = uniqueTags([...normalTags, ...categoryTags]);
   const gender = normalizeTextValue(firstValue(row, ['gender','Gender','genderTag','gender_tag','GenderTag','sex','Sex','性別','性別タグ'])) || '';
   const genderTags = gender ? [gender] : [];
@@ -87,6 +89,7 @@ function normalizeCharacter(row, index){
     url: firstValue(row, ['url','URL','link','Link','リンク']) || '',
     tags: allCharacterTags,
     speciesTags,
+    motifTags,
     jobTags,
     itemTags,
     pointTags,
@@ -680,7 +683,7 @@ function setupCollapsibleCheckList(list){
   const items = [...list.querySelectorAll('.tag-check')];
   list.style.maxHeight = '';
 
-  if(items.length <= 10){
+  if(items.length <= 5){
     list.dataset.expanded = 'true';
     btn.hidden = true;
     setCheckListState(list, btn, true);
@@ -698,7 +701,7 @@ function setCheckListState(list, btn, expand){
   list.style.maxHeight = '';
 
   items.forEach((item, index) => {
-    item.hidden = !expand && index >= 10;
+    item.hidden = !expand && index >= 5;
   });
 
   btn.textContent = expand ? '閉じる' : 'もっと見る';
