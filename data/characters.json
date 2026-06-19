@@ -3232,5 +3232,19 @@
     "職業タグ": "",
     "小物タグ": "ヘアピン",
     "ワンポイントタグ": ""
+  },
+  {
+    "id": 232,
+    "name": "鳴上キョウ",
+    "kana": "なるかみ きょう",
+    "romaji": "Narukami Kyou",
+    "icon": "image/narukami-kyou.png",
+    "url": "https://sites.google.com/view/arcobaleno-utau/home",
+    "workTags": "鳴上キョウ(UTAU)",
+    "gender": "男性",
+    "種族タグ": "人間",
+    "職業タグ": "",
+    "小物タグ": "",
+    "ワンポイントタグ": ""
   }
 ]
