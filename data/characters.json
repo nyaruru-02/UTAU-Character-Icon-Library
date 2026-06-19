@@ -71,7 +71,7 @@
     "種族タグ": "鳥",
     "モチーフタグ": "雀",
     "職業タグ": "",
-    "小物タグ": "マスク",
+    "小物タグ": "仮面",
     "ワンポイントタグ": "羽"
   },
   {
@@ -322,12 +322,12 @@
     "icon": "image/kazehiki.png",
     "url": "https://kurukuru2suuzi.wixsite.com/kuzutokaze",
     "workTags": "#くずかぜ",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "職業タグ": "司祭",
+    "小物タグ": "エンジェルヘイロゥ|十字架",
+    "ワンポイントタグ": "片目隠れ"
   },
   {
     "id": 23,
@@ -352,12 +352,12 @@
     "icon": "image/katabanhumei.png",
     "url": "https://moqujc.wixsite.com/mqtop",
     "workTags": "#MQAW",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "機械",
     "モチーフタグ": "",
     "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "小物タグ": "ヘアピン|眼鏡",
+    "ワンポイントタグ": "片目隠れ"
   },
   {
     "id": 25,
@@ -367,12 +367,12 @@
     "icon": "image/kanade-shia.png",
     "url": "https://itsuriutau.wixsite.com/kanadeshia",
     "workTags": "#花撫シア",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
-    "職業タグ": "",
+    "職業タグ": "アイドル",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "オッドアイ|ほくろ"
   },
   {
     "id": 26,
@@ -382,25 +382,25 @@
     "icon": "image/kanade-shion.png",
     "url": "https://itsuriutau.wixsite.com/kanadeshia",
     "workTags": "#花撫シオン",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
-    "職業タグ": "",
+    "職業タグ": "アイドル",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "ほくろ"
   },
   {
     "id": 27,
     "name": "歌為にーと",
     "kana": "かなり にーと",
-    "romaji": "Kanari Niito",
-    "icon": "image/kanari-niito.png",
-    "url": "https://bowlroll.net/user/852117/files",
+    "romaji": "Kanari Nito",
+    "icon": "image/kanari-nito.png",
+    "url": "https://kinomihautaimas.wixsite.com/dongurihiroba",
     "workTags": "#きのみあーと",
-    "gender": "",
-    "種族タグ": "",
-    "モチーフタグ": "",
-    "職業タグ": "",
+    "gender": "不明",
+    "種族タグ": "人間",
+    "モチーフタグ": "星",
+    "職業タグ": "ニート",
     "小物タグ": "",
     "ワンポイントタグ": ""
   },
@@ -412,8 +412,8 @@
     "icon": "image/karane-kyoka.png",
     "url": "https://kaitoramma.chu.jp",
     "workTags": "#空音絵巻",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
     "職業タグ": "",
     "小物タグ": "",
@@ -427,11 +427,11 @@
     "icon": "image/karane-hibiki.png",
     "url": "https://kaitoramma.chu.jp",
     "workTags": "#空音絵巻",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "無性別",
+    "種族タグ": "人間",
     "モチーフタグ": "",
     "職業タグ": "",
-    "小物タグ": "",
+    "小物タグ": "銃",
     "ワンポイントタグ": ""
   },
   {
@@ -442,8 +442,8 @@
     "icon": "image/kiyenn.png",
     "url": "https://utaunanaproplus.wixsite.com/of-web",
     "workTags": "#TNPGateway",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人魚",
     "モチーフタグ": "",
     "職業タグ": "",
     "小物タグ": "",
@@ -472,27 +472,27 @@
     "icon": "image/kizuboshi-sora.png",
     "url": "https://nyaruru.wixsite.com/s-p-w",
     "workTags": "#創星宙",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "神|不老|不死",
     "モチーフタグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "職業タグ": "犯罪者",
+    "小物タグ": "ナイフ",
+    "ワンポイントタグ": "傷|ほくろ"
   },
   {
     "id": 33,
     "name": "キ音キネ",
     "kana": "きね きね",
-    "romaji": "Kine kine",
+    "romaji": "Kine Kine",
     "icon": "image/kine-kine.png",
-    "url": "https://bowlroll.net/user/852117/files",
+    "url": "https://kinomihautaimas.wixsite.com/dongurihiroba",
     "workTags": "#きのみあーと",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
     "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "小物タグ": "ピアス|首輪|指輪",
+    "ワンポイントタグ": "黒ベタ目|高身長|ボディペイント"
   },
   {
     "id": 34,
@@ -502,12 +502,12 @@
     "icon": "image/kyomachi-morte.png",
     "url": "https://utaunanaproplus.wixsite.com/of-web",
     "workTags": "#TNPGateway",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "故人|幽霊",
     "モチーフタグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "職業タグ": "人喰い",
+    "小物タグ": "骨",
+    "ワンポイントタグ": "両目隠れ"
   },
   {
     "id": 35,
@@ -517,12 +517,12 @@
     "icon": "image/kiraboshi-waku.png",
     "url": "https://nyaruru.wixsite.com/s-p-w",
     "workTags": "#輝星惑",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "宇宙人",
     "モチーフタグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "職業タグ": "警察官",
+    "小物タグ": "ヘアピン|眼鏡",
+    "ワンポイントタグ": "グラデーションカラー"
   },
   {
     "id": 36,
@@ -532,11 +532,11 @@
     "icon": "image/kuzyaku-eren.png",
     "url": "https://hznonoka.wixsite.com/utau",
     "workTags": "#あひのん|#玖婥えれん",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
+    "職業タグ": "アイドル",
+    "小物タグ": "ヘアピン",
     "ワンポイントタグ": ""
   },
   {
@@ -547,12 +547,12 @@
     "icon": "image/kuchinashi-awo.png",
     "url": "https://nichikuniku1129063.wixsite.com/website-3",
     "workTags": "#Pietà_",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "機械",
     "モチーフタグ": "",
-    "職業タグ": "",
+    "職業タグ": "サポーター|カウンセラー",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "メッシュ"
   },
   {
     "id": 38,
@@ -562,8 +562,8 @@
     "icon": "image/kurobousuku.png",
     "url": "https://subarumusicstore.studio.site",
     "workTags": "#赤黒快日",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
     "職業タグ": "",
     "小物タグ": "",
@@ -577,10 +577,10 @@
     "icon": "image/kei.png",
     "url": "http://park2.wakwak.com/~mbox/vo/hk/hkfre.htm",
     "workTags": "#蛍_UTAU",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
-    "職業タグ": "",
+    "職業タグ": "学生",
     "小物タグ": "",
     "ワンポイントタグ": ""
   },
@@ -592,8 +592,8 @@
     "icon": "image/keine-ron.png",
     "url": "https://keineron.wixsite.com/index",
     "workTags": "#京音ロン",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
     "職業タグ": "",
     "小物タグ": "",
@@ -607,12 +607,12 @@
     "icon": "image/gekiyaku.png",
     "url": "https://kurukuru2suuzi.wixsite.com/kuzutokaze",
     "workTags": "#くずかぜ",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
     "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "小物タグ": "エンジェルヘイロゥ|包帯",
+    "ワンポイントタグ": "アホ毛"
   },
   {
     "id": 42,
@@ -622,8 +622,8 @@
     "icon": "image/kedaruge.png",
     "url": "https://kakokyu102krbs.wixsite.com/greenmilky",
     "workTags": "#グリーンミルキー",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
     "職業タグ": "",
     "小物タグ": "",
@@ -637,12 +637,12 @@
     "icon": "image/kon-kokuto.png",
     "url": "https://chunyinhui021.wixsite.com/mutyuusaisei",
     "workTags": "#無中彩声",
-    "gender": "",
-    "種族タグ": "",
-    "モチーフタグ": "",
+    "gender": "男性",
+    "種族タグ": "妖怪|長寿",
+    "モチーフタグ": "狐",
     "職業タグ": "",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "ケモ耳|メッシュ|尻尾"
   },
   {
     "id": 44,
@@ -652,11 +652,11 @@
     "icon": "image/kokubangakari.png",
     "url": "https://utauudon.wixsite.com/origamisyokudou",
     "workTags": "#折紙食堂",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
+    "職業タグ": "学生",
+    "小物タグ": "マスク",
     "ワンポイントタグ": ""
   },
   {
@@ -667,11 +667,11 @@
     "icon": "image/kokorone-futaba.png",
     "url": "https://hinagitsune-utau.wixsite.com/utaukokorone",
     "workTags": "#ウタウココロネ",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
+    "職業タグ": "学生|アイドル",
+    "小物タグ": "リボン|カチューシャ",
     "ワンポイントタグ": ""
   },
   {
@@ -697,12 +697,12 @@
     "icon": "image/saika.png",
     "url": "https://nichikuniku1129063.wixsite.com/website-3",
     "workTags": "#Pietà_",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "悪魔",
     "モチーフタグ": "",
     "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "小物タグ": "髪飾り",
+    "ワンポイントタグ": "インナーカラー|羽"
   },
   {
     "id": 48,
@@ -772,10 +772,10 @@
     "icon": "image/shion.png",
     "url": "https://nichikuniku1129063.wixsite.com/website-3",
     "workTags": "#Pietà_",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "機械",
     "モチーフタグ": "",
-    "職業タグ": "",
+    "職業タグ": "サポーター",
     "小物タグ": "",
     "ワンポイントタグ": ""
   },
@@ -802,12 +802,12 @@
     "icon": "image/shidei.png",
     "url": "https://kakokyu102krbs.wixsite.com/greenmilky",
     "workTags": "#グリーンミルキー",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
     "職業タグ": "",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "オッドアイ|アホ毛"
   },
   {
     "id": 55,
@@ -892,9 +892,9 @@
     "icon": "image/sennomiya-sirou.png",
     "url": "http://park2.wakwak.com/~mbox/vo/hk/hkfre.htm",
     "workTags": "#仟乃宮紫狼",
-    "gender": "",
-    "種族タグ": "",
-    "モチーフタグ": "",
+    "gender": "男性",
+    "種族タグ": "使い魔",
+    "モチーフタグ": "犬",
     "職業タグ": "",
     "小物タグ": "",
     "ワンポイントタグ": ""
@@ -967,12 +967,12 @@
     "icon": "image/chunne-haiki.png",
     "url": "https://chunyinhui021.wixsite.com/mutyuusaisei",
     "workTags": "#無中彩声",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "吸血鬼",
     "モチーフタグ": "",
     "職業タグ": "",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "アホ毛|メッシュ"
   },
   {
     "id": 66,
@@ -1177,12 +1177,12 @@
     "icon": "image/nakogaki-itsuki.png",
     "url": "http://park2.wakwak.com/~mbox/vo/hk/hkfre.htm",
     "workTags": "#猫垣一姫",
-    "gender": "",
-    "種族タグ": "",
-    "モチーフタグ": "",
+    "gender": "女性",
+    "種族タグ": "動物",
+    "モチーフタグ": "猫",
     "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "小物タグ": "リボン",
+    "ワンポイントタグ": "ケモ耳|尻尾"
   },
   {
     "id": 80,
@@ -1207,12 +1207,12 @@
     "icon": "image/nekomimiuchufuku.png",
     "url": "https://nyaruru.wixsite.com/s-p-w",
     "workTags": "#mono_猫耳宇宙服",
-    "gender": "",
-    "種族タグ": "",
-    "モチーフタグ": "",
+    "gender": "無性別",
+    "種族タグ": "宇宙人",
+    "モチーフタグ": "宇宙|猫",
     "職業タグ": "",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "ケモ耳|髭"
   },
   {
     "id": 82,
@@ -1342,11 +1342,11 @@
     "icon": "image/hoshikawa-tia.png",
     "url": "https://nyaruru.wixsite.com/s-p-w",
     "workTags": "#星河ティア",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "宇宙人",
     "モチーフタグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
+    "職業タグ": "学生",
+    "小物タグ": "ヘアピン",
     "ワンポイントタグ": ""
   },
   {
@@ -1357,11 +1357,11 @@
     "icon": "image/hoshikawa-furea.png",
     "url": "https://nyaruru.wixsite.com/s-p-w",
     "workTags": "#星河フレア",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "宇宙人",
     "モチーフタグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
+    "職業タグ": "警察官",
+    "小物タグ": "ヘアピン",
     "ワンポイントタグ": ""
   },
   {
@@ -1387,10 +1387,10 @@
     "icon": "image/hotaru.png",
     "url": "http://park2.wakwak.com/~mbox/vo/hk/hkfre.htm",
     "workTags": "#蛍_UTAU",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
-    "職業タグ": "",
+    "職業タグ": "学生",
     "小物タグ": "",
     "ワンポイントタグ": ""
   },
@@ -1432,12 +1432,12 @@
     "icon": "image/matsuyuki-chitose.png",
     "url": "https://nichikuniku1129063.wixsite.com/website-3",
     "workTags": "#Pietà_",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
-    "職業タグ": "",
+    "職業タグ": "殺し屋",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "片目隠れ|火傷|ほくろ"
   },
   {
     "id": 97,
@@ -1462,12 +1462,12 @@
     "icon": "image/mikuji.png",
     "url": "https://utauudon.wixsite.com/origamisyokudou",
     "workTags": "#折紙食堂",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
     "職業タグ": "",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "隻眼"
   },
   {
     "id": 99,
@@ -1477,10 +1477,10 @@
     "icon": "image/mx-dream.png",
     "url": "https://utauudon.wixsite.com/origamisyokudou",
     "workTags": "#折紙食堂",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "無性別",
+    "種族タグ": "人間|長寿",
     "モチーフタグ": "",
-    "職業タグ": "",
+    "職業タグ": "魔法使い|手品師",
     "小物タグ": "",
     "ワンポイントタグ": ""
   },
@@ -1495,7 +1495,7 @@
     "gender": "女性",
     "種族タグ": "吸血鬼",
     "モチーフタグ": "兎|さくらんぼ",
-    "職業タグ": "魔法少女",
+    "職業タグ": "魔法使い",
     "小物タグ": "髪飾り",
     "ワンポイントタグ": "ケモ耳"
   },
@@ -1507,12 +1507,12 @@
     "icon": "image/yakazuroid.png",
     "url": "https://moqujc.wixsite.com/mqtop",
     "workTags": "#MQAW",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "機械",
     "モチーフタグ": "",
     "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "小物タグ": "ゴーグル",
+    "ワンポイントタグ": "両目隠れ"
   },
   {
     "id": 102,
@@ -1582,12 +1582,12 @@
     "icon": "image/yomotsu-nichi.png",
     "url": "https://nichikuniku1129063.wixsite.com/website-3",
     "workTags": "#Pietà_",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "天使|長寿",
     "モチーフタグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
-    "ワンポイントタグ": ""
+    "職業タグ": "カウンセラー",
+    "小物タグ": "エンジェルヘイロゥ|十字架",
+    "ワンポイントタグ": "インナーカラー|片目隠れ"
   },
   {
     "id": 107,
@@ -1627,12 +1627,12 @@
     "icon": "image/rie.png",
     "url": "https://kakokyu102krbs.wixsite.com/greenmilky",
     "workTags": "#グリーンミルキー",
-    "gender": "",
+    "gender": "男性",
     "種族タグ": "",
     "モチーフタグ": "",
     "職業タグ": "",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "ほくろ"
   },
   {
     "id": 110,
@@ -1927,11 +1927,11 @@
     "icon": "image/karane-hibiku.png",
     "url": "https://kaitoramma.chu.jp",
     "workTags": "#空音絵巻",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "男性",
+    "種族タグ": "人間",
     "モチーフタグ": "",
     "職業タグ": "",
-    "小物タグ": "",
+    "小物タグ": "銃",
     "ワンポイントタグ": ""
   },
   {
@@ -2133,15 +2133,15 @@
     "id": 143,
     "name": "ウフーロ・ジョホマウ・シフショ",
     "kana": "うふーろ じょほまう しふしょ",
-    "romaji": "Ufuro Johomau Shifusho",
-    "icon": "image/ufuro-johomau-shifusho.png",
-    "url": "https://bowlroll.net/user/852117/files",
+    "romaji": "Ufuro Johomau Shifusyo",
+    "icon": "image/ufuro-johomau-shifusyo.png",
+    "url": "https://kinomihautaimas.wixsite.com/dongurihiroba",
     "workTags": "#きのみあーと",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間|不老|不死|長寿",
     "モチーフタグ": "",
-    "職業タグ": "",
-    "小物タグ": "",
+    "職業タグ": "魔法使い",
+    "小物タグ": "杖",
     "ワンポイントタグ": ""
   },
   {
@@ -2317,8 +2317,8 @@
     "icon": "image/karane-kodama.png",
     "url": "https://kaitoramma.chu.jp",
     "workTags": "#空音絵巻",
-    "gender": "",
-    "種族タグ": "",
+    "gender": "女性",
+    "種族タグ": "人間|長寿",
     "モチーフタグ": "",
     "職業タグ": "",
     "小物タグ": "",
@@ -2347,12 +2347,12 @@
     "icon": "image/key-flow.png",
     "url": "https://nyaruru.wixsite.com/s-p-w",
     "workTags": "#UTA打KyeFlow",
-    "gender": "",
-    "種族タグ": "",
-    "モチーフタグ": "",
-    "職業タグ": "",
+    "gender": "無性別",
+    "種族タグ": "機械",
+    "モチーフタグ": "キーボード",
+    "職業タグ": "サポーター",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "尻尾"
   },
   {
     "id": 158,
@@ -2887,12 +2887,12 @@
     "icon": "image/kurage.png",
     "url": "https://moqujc.wixsite.com/mqtop",
     "workTags": "#MQAW",
-    "gender": "",
-    "種族タグ": "",
-    "モチーフタグ": "",
+    "gender": "女性",
+    "種族タグ": "宇宙人",
+    "モチーフタグ": "クラゲ",
     "職業タグ": "",
     "小物タグ": "",
-    "ワンポイントタグ": ""
+    "ワンポイントタグ": "アホ毛|両目隠れ"
   },
   {
     "id": 194,
@@ -3177,7 +3177,7 @@
     "モチーフタグ": "",
     "職業タグ": "",
     "小物タグ": "ヘッドホン",
-    "ワンポイントタグ": "アホ毛|オッドアイ|尻尾"
+    "ワンポイントタグ": "アホ毛|オッドアイ|特殊肌|尻尾"
   },
   {
     "id": 213,
@@ -3461,7 +3461,7 @@
     "種族タグ": "人間",
     "モチーフタグ": "蛙",
     "職業タグ": "",
-    "小物タグ": "ヘアピン",
+    "小物タグ": "髪飾り",
     "ワンポイントタグ": ""
   },
   {
