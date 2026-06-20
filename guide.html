@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>使い方・仕様 | UTAUキャラクターアイコン配布所</title>
-  <link rel="stylesheet" href="css/style.css?v=random-card-fallback-20260613" />
+  <link rel="stylesheet" href="css/style.css?v=request-page-20260620" />
 </head>
 <body>
 <header class="site-header">
@@ -15,6 +15,7 @@
   <nav class="nav">
     <a href="./">ホーム</a>
     <a href="guide.html">使い方</a>
+    <a href="request.html">リクエスト</a>
     <a href="terms.html">利用規約</a>
     <a class="social-link" href="https://x.com/hoshikawa_02" target="_blank" rel="noopener">X</a>
     <a class="social-link" href="https://bsky.app/profile/hoshikawa-02.bsky.social" target="_blank" rel="noopener">Bluesky</a>
@@ -27,31 +28,70 @@
     <h1>サイトの使い方・仕様</h1>
     <p class="muted">キャラクターアイコンを探すときの基本操作と、データベースの表示仕様をまとめています。</p>
 
+    <section class="usage-flow" aria-labelledby="usageFlowTitle">
+      <div class="usage-flow-head">
+        <p class="section-label">FLOW</p>
+        <h2 id="usageFlowTitle">アイコンを探して保存するまで</h2>
+        <p>検索、絞り込み、保存の3ステップで利用できます。</p>
+      </div>
+
+      <ol class="flow-steps">
+        <li class="flow-step flow-step-search">
+          <span class="flow-number">1</span>
+          <div class="flow-icon" aria-hidden="true"><img src="assets/search_icon_blue.svg" alt=""></div>
+          <h3>検索する</h3>
+          <p>名前やキーワードからキャラクターを探します。</p>
+        </li>
+        <li class="flow-step flow-step-filter">
+          <span class="flow-number">2</span>
+          <div class="flow-icon" aria-hidden="true"><img src="assets/tag_icon.svg" alt=""></div>
+          <h3>絞り込む</h3>
+          <p>性別・種族・モチーフなどのタグを組み合わせて絞り込みます。</p>
+        </li>
+        <li class="flow-step flow-step-save">
+          <span class="flow-number">3</span>
+          <div class="flow-icon" aria-hidden="true"><img src="assets/download_icon.svg" alt=""></div>
+          <h3>保存する</h3>
+          <p>アイコン画像を右クリックし、<strong>「画像を別名保存」</strong>を選びます。</p>
+        </li>
+      </ol>
+
+      <div class="flow-point-box">
+        <div class="flow-point-badge">POINT</div>
+        <ul>
+          <li>タグ検索を組み合わせると、目的のキャラクターを探しやすくなります。</li>
+          <li>保存したアイコンは、利用規約を確認したうえでご利用ください。</li>
+          <li>最後は画像の上で右クリックして「画像を別名保存」です。</li>
+        </ul>
+      </div>
+    </section>
+
     <section class="terms-section">
-      <h2>検索の使い方</h2>
+      <h2>検索の仕様</h2>
       <ul class="check-list">
         <li>右側の「キャラクター検索」から、<code>入力検索</code> <code>50音検索</code> <code>タグ検索</code>ができます。<br>
         スマホと一部のタブレットは、右上の<code>虫眼鏡アイコン</code>からメニューを開いてご利用ください。</li>
+        <li>入力検索は名前の他にも、作品タグや種族タグ、モチーフタグ、職業タグなども検索できます。</li>
         <li>検索結果は即時に反映されます。</li>
         <li>性別タグ、種族タグ、職業タグ、小物タグ、身体的特徴タグは複数条件を組み合わせて絞り込めます。</li>
-        <li>タグが10個を超えるカテゴリは、最初は10個まで表示し、<code>「もっと見る」</code>で全表示できます。</li>
       </ul>
     </section>
 
     <section class="terms-section">
       <h2>タグの仕様</h2>
       <ul class="check-list">
+        <li>タグが10個を超えるカテゴリは、最初は10個まで表示し、<code>「もっと見る」</code>で全表示できます。</li>
         <li>キャラクターカード上では、カテゴリ分けせずにタグをまとめて表示します。</li>
         <li>タグは管理人の判断のもと、アペンドで見た目が変わったとしても変わらずにキーワードとして残りそうなものをセットしています。</li>
       </ul>
     </section>
 
     <section class="terms-section">
-      <h2>並び替え</h2>
+      <h2>並び替えの仕様</h2>
       <ul class="check-list">
-        <li>新しい順：登録が新しいものから表示します。</li>
-        <li>名前順：ひらがな読み（kana）順で表示します。</li>
-        <li>表示名順：表示名（name）順で表示します。</li>
+        <li><code>新しい順</code>：登録が新しいものから表示します。</li>
+        <li><code>名前順</code>：ひらがな読み（kana）順で表示します。</li>
+        <li><code>表示名順</code>：表示名（name）順で表示します。</li>
       </ul>
     </section>
 
