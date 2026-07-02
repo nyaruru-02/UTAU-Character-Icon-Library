@@ -3688,5 +3688,20 @@
     "職業タグ": "",
     "小物タグ": "",
     "ワンポイントタグ": "ヘッドセット"
+  },
+  {
+    "id": 247,
+    "name": "泡沫綴",
+    "kana": "うたかた つづり",
+    "romaji": "Utakata Tsuzuri",
+    "icon": "image/utakata-tsuzuri.png",
+    "url": "https://tourist100f.wixsite.com/utakata-kosyo",
+    "workTags": "#泡沫古書店",
+    "gender": "女性",
+    "種族タグ": "人間",
+    "モチーフタグ": "",
+    "職業タグ": "書店員",
+    "小物タグ": "",
+    "ワンポイントタグ": ""
   }
 ]
