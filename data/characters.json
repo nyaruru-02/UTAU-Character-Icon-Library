@@ -3673,5 +3673,20 @@
     "職業タグ": "",
     "小物タグ": "",
     "ワンポイントタグ": ""
+  },
+  {
+    "id": 246,
+    "name": "愛須栗无",
+    "kana": "あいす くりむ",
+    "romaji": "Aisu Kurimu",
+    "icon": "image/aisu-kurimu.png",
+    "url": "https://utau.fandom.com/wiki/Aisu_Kurimu",
+    "workTags": "Aisu|Kurimu(UTAU)",
+    "gender": "女性",
+    "種族タグ": "機械",
+    "モチーフタグ": "アイス",
+    "職業タグ": "",
+    "小物タグ": "",
+    "ワンポイントタグ": "ヘッドセット"
   }
 ]
