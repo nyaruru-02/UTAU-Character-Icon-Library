@@ -1,6 +1,6 @@
 ﻿id,name,kana,romaji,icon,url,workTags,gender,種族タグ,モチーフタグ,職業タグ,小物タグ,ワンポイントタグ
 1,赤鐘芙蓉,あかがね ふよう,Akagane Fuyo,image/akagane-fuyo.png,https://mitoristu.wixsite.com/kousaibako,#虹彩箱,女性,鬼,,,,尖耳
-2,東屋亭久一,あずまやてい きゅういち,Azumayatei Kyuichi,image/azumayatei-kyuichi.png,https://lit.link/sereinrain,#東屋でお茶でも,男性,人間,,学者,眼鏡,インナーカラー|片目隠れ
+2,東屋亭久一,あずまやてい きゅういち,Azumayatei Kyuichi,image/azumayatei-kyuichi.png,https://lit.link/sereinrain,#東屋でお茶でも,男性,人間,,科学者,眼鏡,インナーカラー|片目隠れ
 3,アセテート,あせてーと,Acetate,image/acetate.png,https://cloudcatch1224.wixsite.com/godsfoot,#神様の足元,男性,人間|機械,ドラゴン,機械整備士,,角(ツノ)|羽|尻尾
 4,足立レイ,あだち れい,Adachi Rei,image/adachi-rei.png,https://mechanicalgirl.jp,#足立レイ,女性,機械,,,イヤーユニット,
 5,花鶏音ひわ,あとりね ひわ,Atorine Hiwa,image/atorine-hiwa.png,https://torinosu-hikikomori.jimdofree.com,#ひわわーアラート,女性,鳥,雀,,仮面,羽
@@ -247,3 +247,4 @@
 246,愛須栗无,あいす くりむ,Aisu Kurimu,image/aisu-kurimu.png,https://utau.fandom.com/wiki/Aisu_Kurimu,Aisu|Kurimu(UTAU),女性,機械,アイス,,,ヘッドセット
 247,泡沫綴,うたかた つづり,Utakata Tsuzuri,image/utakata-tsuzuri.png,https://tourist100f.wixsite.com/utakata-kosyo,#泡沫古書店,女性,人間,,書店員,,
 248,F-113,えふ いちいちさん,F-113,image/f-113.png,https://tourist100f.wixsite.com/utakata-kosyo,#泡沫古書店,女性,機械,,,拳銃,
+249,痛,あぷだ,Apuda,image/apuda.png,https://haingyoi.wixsite.com/utau,#APUDANG,不明,人間,,科学者,包帯|注射器,インナーカラー|片目隠れ
