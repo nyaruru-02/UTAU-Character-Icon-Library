@@ -1,9 +1,19 @@
 :root{
-  --bg:#f6f9ff; --panel:#fff; --text:#0c1b4d; --muted:#63708f; --line:#dce5f5;
-  --primary:#102a83; --primary-2:#eaf0ff; --accent:#2f64ff; --shadow:0 4px 14px rgba(30,56,120,.09);
+  --bg:#f6f9ff;
+  --panel:#fff;
+  --text:#0c1b4d;
+  --muted:#63708f;
+  --line:#dce5f5;
+  --primary:#102a83;
+  --primary-2:#eaf0ff;
+  --accent:#2f64ff;
+  --shadow:0 4px 14px rgba(30,56,120,.09);
   --radius:18px;
 }
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box
+}
 
 body{
   margin:0;
@@ -192,6 +202,7 @@ select,.search-box input{
 .search-box button,.button{
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   height:44px;
   border:0;
   border-radius:12px;
@@ -522,7 +533,8 @@ select,.search-box input{
 
 /* ===== Custom updates: header/search spacing, split banners, terms page ===== */
 .hero-content{
-  max-width:720px;
+  width:min(100%,980px);
+  max-width:980px;
 }
 
 .hero-actions{
@@ -687,6 +699,7 @@ select,.search-box input{
   display:inline-flex;
   align-items:center;
   justify-content:center;
+  width: 100%;
   min-height:40px;
   padding:0 16px;
   border-radius:999px;
@@ -773,7 +786,7 @@ select,.search-box input{
 
 /* ===== Random page and fixed 6-row side column ===== */
 .random-layout{
-  max-width:880px;
+  max-width:1200px;
   margin:0 auto;
   padding:24px;
 }
@@ -788,14 +801,15 @@ select,.search-box input{
 
 .random-card{
   display:grid;
-  grid-template-columns:220px 1fr;
+  grid-template-columns:260px minmax(0,1fr);
   align-items:stretch;
-  max-width:720px;
+  width:min(100%,980px);
+  max-width:980px;
 }
 
 .random-card img{
-  width:220px;
-  height:220px;
+  width:260px;
+  height:260px;
   aspect-ratio:1/1;
   object-fit:cover;
 }
@@ -1770,7 +1784,7 @@ select,.search-box input{
 
 .random-card.character-card{
   display:grid;
-  grid-template-columns:minmax(220px, 280px) minmax(0, 1fr);
+  grid-template-columns:1fr 1fr;
   align-items:stretch;
   width:100%;
   max-width:860px;
@@ -1782,8 +1796,6 @@ select,.search-box input{
   height:100%;
   min-height:280px;
   aspect-ratio:1 / 1;
-  object-fit:cover;
-  align-self:stretch;
 }
 
 .random-card.character-card .card-body{
@@ -1795,7 +1807,7 @@ select,.search-box input{
   margin-top:auto;
 }
 
-@media (max-width: 640px){
+@media (max-width: 900px){
   .random-card.character-card{
     display:flex;
     flex-direction:column;
@@ -2319,5 +2331,221 @@ select,.search-box input{
 
   .request-type-button{
     width:100%;
+  }
+}
+
+/* ===== Random result SNS share ===== */
+.random-share{
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+
+.random-share-title{
+  margin:0 0 10px;
+  font-size:13px;
+  font-weight:800;
+  color:var(--primary);
+}
+
+.random-share-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.share-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  padding:9px 14px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:#fff;
+  color:var(--primary);
+  font-size:13px;
+  font-weight:800;
+  line-height:1;
+  text-decoration:none;
+  cursor:pointer;
+  transition:transform .16s ease, box-shadow .16s ease, opacity .16s ease;
+}
+
+.share-button:hover{
+  transform:translateY(-1px);
+  box-shadow:0 12px 24px rgba(18,38,63,.11);
+}
+
+.share-x{
+  background:#111827;
+  border-color:#111827;
+  color:#fff;
+}
+
+.share-bluesky{
+  background:#1185fe;
+  border-color:#1185fe;
+  color:#fff;
+}
+
+.share-native{
+  background:#eeeef4;
+  border-color:transparent;
+  color:var(--primary);
+}
+
+@media (max-width:640px){
+  .random-share-buttons{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .share-button{
+    width:100%;
+  }
+}
+
+
+/* ===== Random page fixes: square result image + tag folding ===== */
+.random-card{
+  align-items:start;
+}
+
+.random-card > img{
+  display:block;
+  width:260px;
+  height:260px;
+  aspect-ratio:1 / 1;
+  object-fit:cover;
+  flex-shrink:0;
+  align-self:start;
+}
+
+.random-card .card-main-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  overflow:visible;
+}
+
+.random-card .card-main-tags.is-collapsed{
+  max-height:30px;
+  overflow:hidden;
+}
+
+.random-card .card-tags-toggle{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:var(--primary);
+  font-size:12px;
+  font-weight:800;
+  padding:6px 0 0;
+  cursor:pointer;
+}
+
+.random-card .card-tags-toggle:hover{
+  text-decoration:underline;
+}
+
+.random-card .card-tags-toggle[hidden]{
+  display:none;
+}
+
+@media (max-width:640px){
+  .random-card > img{
+    width:100%;
+    height:auto;
+    aspect-ratio:1 / 1;
+    object-fit:cover;
+  }
+}
+
+
+/* Random gacha card layout override */
+.random-character-card,
+.gacha-card,
+.random-card{
+  display:grid;
+  align-items:stretch;
+}
+.random-character-card .character-image,
+.gacha-card .character-image,
+.random-card .character-image,
+.random-character-card img,
+.gacha-card img,
+.random-card img{
+  width:100%;
+  aspect-ratio:1/1;
+  height:auto !important;
+  object-fit:cover;
+  align-self:stretch;
+}
+/* ===== Random panel auto width from result card ===== */
+.random-layout{
+  text-align:center;
+}
+
+.random-panel.panel{
+  display:inline-block;
+  width:auto;
+  max-width:calc(100vw - 48px);
+  box-sizing:border-box;
+  text-align:left;
+}
+
+.random-result{
+  width:min(980px, calc(100vw - 112px));
+  max-width:100%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.random-card.character-card{
+  width:100%;
+  max-width:none;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  align-items:stretch;
+  box-sizing:border-box;
+}
+
+.random-card.character-card > img{
+  width:100%;
+  min-height:0;
+  aspect-ratio:1 / 1;
+}
+
+.random-card.character-card .card-body{
+  min-width:0;
+}
+
+@media (max-width: 900px){
+  .random-layout{
+    text-align:left;
+  }
+
+  .random-panel.panel{
+    display:block;
+    width:100%;
+    max-width:none;
+  }
+
+  .random-result{
+    width:100%;
+  }
+
+  .random-card.character-card{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+
+  .random-card.character-card > img{
+    width:100%;
+    height:auto !important;
+    aspect-ratio:1 / 1;
   }
 }
