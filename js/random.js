@@ -138,6 +138,14 @@ function renderRandomCharacter(c){
         <p class="reading2">${escapeHtml(c.romaji)}</p>
         ${renderCardTags(c, './')}
         ${c.url ? `<a class="detail-link" href="${escapeAttr(c.url)}" target="_blank" rel="noopener">管理サイトはこちら</a>` : ''}
+        <div id="randomSharePanel" class="random-share random-share-panel" aria-label="ガチャ結果を共有">
+          <p class="random-share-title">結果を共有</p>
+          <div class="random-share-buttons">
+            <a id="shareXBtn" class="share-button share-x" href="#" target="_blank" rel="noopener">Xで投稿</a>
+            <a id="shareBlueskyBtn" class="share-button share-bluesky" href="#" target="_blank" rel="noopener">Blueskyで投稿</a>
+            <button id="webShareBtn" class="share-button share-native" type="button">リンクを共有</button>
+          </div>
+        </div>
       </div>
     </article>`;
   setupCardTagToggles(root);

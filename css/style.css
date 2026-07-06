@@ -2572,3 +2572,43 @@ select,.search-box input{
     width:100%;
   }
 }
+
+
+/* ===== Random share inside random card ===== */
+.random-card.character-card .card-body{
+  display:flex;
+  flex-direction:column;
+}
+
+.random-card.character-card .random-share-panel{
+  width:100%;
+  max-width:none;
+  margin:18px 0 0;
+  padding:16px 0 0;
+  border:0;
+  border-top:1px solid var(--line);
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
+
+.random-card.character-card .random-share{
+  margin-top:auto;
+}
+
+.random-card.character-card .random-share-title{
+  margin:0 0 10px;
+}
+
+.random-card.character-card .random-share-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+@media (max-width:640px){
+  .random-card.character-card .random-share-buttons{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+}
