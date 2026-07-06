@@ -1,19 +1,37 @@
-const DATA_URL = new URL('../data/characters.json', document.currentScript.src).href;
+const DATA_URLS = [
+  new URL('../data/characters.json', document.currentScript.src).href,
+  new URL('./data/characters.json', location.href).href,
+  `${location.origin}${location.pathname.replace(/[^/]*$/, '')}data/characters.json`
+];
 const SITE_SHARE_TAGS = ['UTAUアイコンガチャ引いてみた'];
 let characters = [];
 let currentCharacter = null;
 
 initRandomPage();
 
+
+async function fetchCharactersJson(){
+  let lastError = null;
+  for(const url of [...new Set(DATA_URLS)]){
+    try{
+      const res = await fetch(`${url}?v=${Date.now()}`, { cache:'no-store' });
+      if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+      return await res.json();
+    }catch(error){
+      lastError = error;
+    }
+  }
+  console.error('characters.jsonを読み込めませんでした', lastError);
+  return null;
+}
+
 async function initRandomPage(){
   try{
-    const res = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache:'no-store' });
-    if(!res.ok){
+    const data = await fetchCharactersJson();
+    if(!data){
       document.querySelector('#randomResult').innerHTML = '<p class="empty">characters.jsonを読み込めませんでした。</p>';
       return;
     }
-
-    const data = await res.json();
     const rows = Array.isArray(data) ? data : (Array.isArray(data.characters) ? data.characters : []);
     characters = rows.map((row, index) => {
       const speciesTags = collectTagsFromFields(row, ['speciesTags','species_tags','SpeciesTags','raceTags','race_tags','種族タグ','種族']);
@@ -120,25 +138,23 @@ function renderRandomCharacter(c){
         <p class="reading2">${escapeHtml(c.romaji)}</p>
         ${renderCardTags(c, './')}
         ${c.url ? `<a class="detail-link" href="${escapeAttr(c.url)}" target="_blank" rel="noopener">管理サイトはこちら</a>` : ''}
-        ${renderShareArea(c)}
       </div>
     </article>`;
   setupCardTagToggles(root);
-  bindShareButtons(root, c);
+  updateSharePanel(c);
 }
 
-function renderShareArea(c){
-  const xUrl = buildXShareUrl(c);
-  const bskyUrl = buildBlueskyShareUrl(c);
-  return `
-    <div class="random-share" aria-label="ガチャ結果を共有">
-      <p class="random-share-title">結果を共有</p>
-      <div class="random-share-buttons">
-        <a class="share-button share-x" href="${escapeAttr(xUrl)}" target="_blank" rel="noopener">Xで投稿</a>
-        <a class="share-button share-bluesky" href="${escapeAttr(bskyUrl)}" target="_blank" rel="noopener">Blueskyで投稿</a>
-        <button id="webShareBtn" class="share-button share-native" type="button">リンクを共有</button>
-      </div>
-    </div>`;
+function updateSharePanel(c){
+  const panel = document.querySelector('#randomSharePanel');
+  const xBtn = document.querySelector('#shareXBtn');
+  const bskyBtn = document.querySelector('#shareBlueskyBtn');
+  if(!panel || !xBtn || !bskyBtn) return;
+
+  xBtn.href = buildXShareUrl(c);
+  bskyBtn.href = buildBlueskyShareUrl(c);
+  panel.hidden = false;
+
+  bindShareButtons(panel, c);
 }
 
 function bindShareButtons(root, c){
@@ -150,7 +166,10 @@ function bindShareButtons(root, c){
     return;
   }
 
-  btn.addEventListener('click', async () => {
+  btn.hidden = false;
+  const freshBtn = btn.cloneNode(true);
+  btn.replaceWith(freshBtn);
+  freshBtn.addEventListener('click', async () => {
     try{
       await navigator.share({
         title: 'ランダムガチャ結果',
@@ -158,7 +177,6 @@ function bindShareButtons(root, c){
         url: getShareUrl(c)
       });
     }catch(error){
-      // キャンセル時は何もしない。
       if(error?.name !== 'AbortError') console.warn('共有に失敗しました', error);
     }
   });
