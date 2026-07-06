@@ -193,7 +193,16 @@ function bindShareButtons(root, c){
 function buildShareText(c){
   const name = c?.name || 'キャラクター';
   const tagText = SITE_SHARE_TAGS.map(tag => `#${tag}`).join(' ');
-  return `${tagText}\nランダムガチャで「${name}」が出ました！\n\nアイコンサイトはコチラ↓↓↓\n\n`;
+  return [
+    tagText,
+    `ランダムガチャで「${name}」が出ました！`,
+    '',
+    'アイコンサイトはコチラ↓↓↓'
+  ].join('\n') + '\n';
+}
+
+function buildShareMessage(c){
+  return `${buildShareText(c)}${getShareUrl(c)}`;
 }
 
 function getShareUrl(c){
@@ -206,14 +215,15 @@ function getShareUrl(c){
 
 function buildXShareUrl(c){
   const url = new URL('https://twitter.com/intent/tweet');
-  url.searchParams.set('text', buildShareText(c));
-  url.searchParams.set('url', getShareUrl(c));
+  // Xのintentは url パラメータを別指定すると、本文末尾の改行が無視される場合があります。
+  // そのため共有URLも本文に含めて、GitHub Pages上でも改行位置を安定させます。
+  url.searchParams.set('text', buildShareMessage(c));
   return url.href;
 }
 
 function buildBlueskyShareUrl(c){
   const url = new URL('https://bsky.app/intent/compose');
-  url.searchParams.set('text', `${buildShareText(c)}\n${getShareUrl(c)}`);
+  url.searchParams.set('text', buildShareMessage(c));
   return url.href;
 }
 
