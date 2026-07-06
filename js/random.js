@@ -1,41 +1,54 @@
 const DATA_URL = new URL('../data/characters.json', document.currentScript.src).href;
+const SITE_SHARE_TAGS = ['UTAUアイコンガチャ引いてみた'];
 let characters = [];
+let currentCharacter = null;
 
 initRandomPage();
 
 async function initRandomPage(){
   try{
-  const res = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache:'no-store' });
-  if(!res.ok){
-    document.querySelector('#randomResult').innerHTML = '<p class="empty">characters.jsonを読み込めませんでした。</p>';
-    return;
-  }
+    const res = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache:'no-store' });
+    if(!res.ok){
+      document.querySelector('#randomResult').innerHTML = '<p class="empty">characters.jsonを読み込めませんでした。</p>';
+      return;
+    }
 
-  const data = await res.json();
-  const rows = Array.isArray(data) ? data : (Array.isArray(data.characters) ? data.characters : []);
-  characters = rows.map((row, index) => {
-    const speciesTags = collectTagsFromFields(row, ['speciesTags','species_tags','SpeciesTags','raceTags','race_tags','種族タグ','種族']);
-    const jobTags = collectTagsFromFields(row, ['jobTags','job_tags','JobTags','occupationTags','occupation_tags','職業タグ','職業']);
-    const itemTags = collectTagsFromFields(row, ['itemTags','item_tags','ItemTags','accessoryTags','accessory_tags','小物タグ','小物']);
-    const pointTags = collectTagsFromFields(row, ['pointTags','point_tags','PointTags','featureTags','feature_tags','onePointTags','one_point_tags','ワンポイントタグ','特徴タグ','特徴']);
-    const normalTags = collectTagsFromFields(row, ['tags','tag','Tags','Tag','characterTags','character_tags','normalTags','normal_tags','タグ','通常タグ']);
-    const categoryTags = uniqueTags([...speciesTags, ...jobTags, ...itemTags, ...pointTags]);
-    return {
-      id: firstValue(row, ['id','ID','Id','no','No','番号']) || String(index + 1),
-      name: firstValue(row, ['name','Name','displayName','display_name','表示名','名前','キャラクター名']) || '',
-      kana: firstValue(row, ['kana','Kana','reading','yomi','読み','ひらがな','かな']) || '',
-      romaji: firstValue(row, ['romaji','Romaji','roman','romanji','ローマ字','ヘボン式']) || '',
-      gender: normalizeTextValue(firstValue(row, ['gender','Gender','genderTag','gender_tag','GenderTag','sex','Sex','性別','性別タグ'])) || '',
-      icon: normalizeIconPath(firstValue(row, ['icon','Icon','image','Image','画像','アイコン','アイコン画像']), firstValue(row, ['romaji','Romaji','roman','romanji','ローマ字','ヘボン式']) || firstValue(row, ['name','Name','displayName','display_name','表示名','名前','キャラクター名']) || ''),
-      url: firstValue(row, ['url','URL','link','Link','リンク']) || '',
-      tags: uniqueTags([...normalTags, ...categoryTags]),
-      categoryTags,
-      workTags: collectTagsFromFields(row, ['workTags','worktags','work_tags','WorkTags','works','work','series','seriesTags','series_tags','作品タグ','作品','シリーズ'])
-    };
-  }).filter(c => c.name || c.kana || c.romaji);
+    const data = await res.json();
+    const rows = Array.isArray(data) ? data : (Array.isArray(data.characters) ? data.characters : []);
+    characters = rows.map((row, index) => {
+      const speciesTags = collectTagsFromFields(row, ['speciesTags','species_tags','SpeciesTags','raceTags','race_tags','種族タグ','種族']);
+      const motifTags = collectTagsFromFields(row, ['motifTags','motif_tags','MotifTags','themeTags','theme_tags','モチーフタグ','モチーフ']);
+      const jobTags = collectTagsFromFields(row, ['jobTags','job_tags','JobTags','occupationTags','occupation_tags','職業タグ','職業']);
+      const itemTags = collectTagsFromFields(row, ['itemTags','item_tags','ItemTags','accessoryTags','accessory_tags','小物タグ','小物']);
+      const pointTags = collectTagsFromFields(row, ['pointTags','point_tags','PointTags','featureTags','feature_tags','onePointTags','one_point_tags','ワンポイントタグ','特徴タグ','特徴','身体的特徴タグ','身体的特徴']);
+      const normalTags = collectTagsFromFields(row, ['tags','tag','Tags','Tag','characterTags','character_tags','normalTags','normal_tags','タグ','通常タグ']);
+      const categoryTags = uniqueTags([...speciesTags, ...motifTags, ...jobTags, ...itemTags, ...pointTags]);
+      return {
+        id: firstValue(row, ['id','ID','Id','no','No','番号']) || String(index + 1),
+        name: firstValue(row, ['name','Name','displayName','display_name','表示名','名前','キャラクター名']) || '',
+        kana: firstValue(row, ['kana','Kana','reading','yomi','読み','ひらがな','かな']) || '',
+        romaji: firstValue(row, ['romaji','Romaji','roman','romanji','ローマ字','ヘボン式']) || '',
+        gender: normalizeTextValue(firstValue(row, ['gender','Gender','genderTag','gender_tag','GenderTag','sex','Sex','性別','性別タグ'])) || '',
+        icon: normalizeIconPath(firstValue(row, ['icon','Icon','image','Image','画像','アイコン','アイコン画像']), firstValue(row, ['romaji','Romaji','roman','romanji','ローマ字','ヘボン式']) || firstValue(row, ['name','Name','displayName','display_name','表示名','名前','キャラクター名']) || ''),
+        url: firstValue(row, ['url','URL','link','Link','リンク']) || '',
+        tags: uniqueTags([...normalTags, ...categoryTags]),
+        speciesTags,
+        motifTags,
+        jobTags,
+        itemTags,
+        pointTags,
+        categoryTags,
+        workTags: collectTagsFromFields(row, ['workTags','worktags','work_tags','WorkTags','works','work','series','seriesTags','series_tags','作品タグ','作品','シリーズ'])
+      };
+    }).filter(c => c.name || c.kana || c.romaji);
 
-  document.querySelector('#drawRandomBtn').addEventListener('click', drawRandom);
-  drawRandom();
+    document.querySelector('#drawRandomBtn')?.addEventListener('click', () => {
+      const url = new URL(location.href);
+      url.searchParams.delete('id');
+      history.replaceState(null, '', url.href);
+      drawRandom({ updateUrl:true });
+    });
+    renderInitialRandomResult();
   }catch(error){
     console.error('ランダムページの初期化に失敗しました', error);
     const root = document.querySelector('#randomResult');
@@ -43,14 +56,60 @@ async function initRandomPage(){
   }
 }
 
-function drawRandom(){
+function renderInitialRandomResult(){
   const root = document.querySelector('#randomResult');
   if(!characters.length){
-    root.innerHTML = '<p class="empty">登録キャラクターがありません。</p>';
+    if(root) root.innerHTML = '<p class="empty">登録キャラクターがありません。</p>';
     return;
   }
 
-  const c = characters[Math.floor(Math.random() * characters.length)];
+  const id = getRequestedCharacterId();
+  const requested = id ? findCharacterById(id) : null;
+
+  if(requested){
+    currentCharacter = requested;
+    renderRandomCharacter(currentCharacter);
+    return;
+  }
+
+  drawRandom({ updateUrl:false });
+}
+
+function drawRandom(options = {}){
+  const root = document.querySelector('#randomResult');
+  if(!characters.length){
+    if(root) root.innerHTML = '<p class="empty">登録キャラクターがありません。</p>';
+    return;
+  }
+
+  currentCharacter = characters[Math.floor(Math.random() * characters.length)];
+  if(options.updateUrl){
+    const url = new URL(location.href);
+    url.searchParams.set('id', currentCharacter.id);
+    history.replaceState(null, '', url.href);
+  }
+  renderRandomCharacter(currentCharacter);
+}
+
+function getRequestedCharacterId(){
+  return new URLSearchParams(location.search).get('id')?.trim() || '';
+}
+
+function findCharacterById(id){
+  const wanted = normalizeIdForCompare(id);
+  return characters.find(c => normalizeIdForCompare(c.id) === wanted)
+    || characters.find(c => String(c.id).trim() === String(id).trim())
+    || null;
+}
+
+function normalizeIdForCompare(value){
+  const text = String(value ?? '').trim();
+  const number = text.match(/\d+/g)?.join('');
+  return number || text;
+}
+
+function renderRandomCharacter(c){
+  const root = document.querySelector('#randomResult');
   root.innerHTML = `
     <article class="character-card random-card">
       <img src="${escapeAttr(getIconSrc(c))}" alt="${escapeAttr(c.name)}のアイコン" loading="lazy" onerror="this.onerror=null;this.src='${escapeAttr(getFallbackIcon(c))}';">
@@ -61,9 +120,75 @@ function drawRandom(){
         <p class="reading2">${escapeHtml(c.romaji)}</p>
         ${renderCardTags(c, './')}
         ${c.url ? `<a class="detail-link" href="${escapeAttr(c.url)}" target="_blank" rel="noopener">管理サイトはこちら</a>` : ''}
+        ${renderShareArea(c)}
       </div>
     </article>`;
   setupCardTagToggles(root);
+  bindShareButtons(root, c);
+}
+
+function renderShareArea(c){
+  const xUrl = buildXShareUrl(c);
+  const bskyUrl = buildBlueskyShareUrl(c);
+  return `
+    <div class="random-share" aria-label="ガチャ結果を共有">
+      <p class="random-share-title">結果を共有</p>
+      <div class="random-share-buttons">
+        <a class="share-button share-x" href="${escapeAttr(xUrl)}" target="_blank" rel="noopener">Xで投稿</a>
+        <a class="share-button share-bluesky" href="${escapeAttr(bskyUrl)}" target="_blank" rel="noopener">Blueskyで投稿</a>
+        <button id="webShareBtn" class="share-button share-native" type="button">リンクを共有</button>
+      </div>
+    </div>`;
+}
+
+function bindShareButtons(root, c){
+  const btn = root.querySelector('#webShareBtn');
+  if(!btn) return;
+
+  if(!navigator.share){
+    btn.hidden = true;
+    return;
+  }
+
+  btn.addEventListener('click', async () => {
+    try{
+      await navigator.share({
+        title: 'ランダムガチャ結果',
+        text: buildShareText(c),
+        url: getShareUrl(c)
+      });
+    }catch(error){
+      // キャンセル時は何もしない。
+      if(error?.name !== 'AbortError') console.warn('共有に失敗しました', error);
+    }
+  });
+}
+
+function buildShareText(c){
+  const name = c?.name || 'キャラクター';
+  const tagText = SITE_SHARE_TAGS.map(tag => `#${tag}`).join(' ');
+  return `${tagText}\nランダムガチャで「${name}」が出ました！`;
+}
+
+function getShareUrl(c){
+  const url = new URL(location.href);
+  url.search = '';
+  url.hash = '';
+  if(c?.id) url.searchParams.set('id', c.id);
+  return url.href;
+}
+
+function buildXShareUrl(c){
+  const url = new URL('https://twitter.com/intent/tweet');
+  url.searchParams.set('text', buildShareText(c));
+  url.searchParams.set('url', getShareUrl(c));
+  return url.href;
+}
+
+function buildBlueskyShareUrl(c){
+  const url = new URL('https://bsky.app/intent/compose');
+  url.searchParams.set('text', `${buildShareText(c)}\n${getShareUrl(c)}`);
+  return url.href;
 }
 
 function renderCardTags(c, prefix = ''){
@@ -175,7 +300,6 @@ function normalizeTags(value){
     .map(t => t.trim())
     .filter(Boolean);
 }
-
 
 function normalizeIconPath(icon, romaji = ''){
   const raw = normalizeTextValue(icon);
