@@ -4,7 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ランダムガチャ｜UTAUキャラクターアイコン配布所</title>
-  <link rel="stylesheet" href="css/style.css?v=random-fix-20260706" />
+  <meta name="description" content="登録キャラクターからランダムで1人を表示するUTAUキャラクターアイコンガチャです。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://detective0615.github.io/UTAU-Character-Icon-Library/random.html" />
+  <meta property="og:title" content="ランダムガチャ｜UTAUキャラクターアイコン配布所" />
+  <meta property="og:description" content="ランダムガチャで出たキャラクターをX・Blueskyへ共有できます。" />
+  <meta property="og:image" content="https://detective0615.github.io/UTAU-Character-Icon-Library/assets/ogp-random.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ランダムガチャ｜UTAUキャラクターアイコン配布所" />
+  <meta name="twitter:description" content="ランダムガチャで出たキャラクターをX・Blueskyへ共有できます。" />
+  <meta name="twitter:image" content="https://detective0615.github.io/UTAU-Character-Icon-Library/assets/ogp-random.png" />
+  <link rel="stylesheet" href="css/style.css?v=share-gh-20260706-4" />
 </head>
 <body>
 <header class="site-header">
@@ -30,6 +40,15 @@
 
     <div id="randomResult" class="random-result" aria-live="polite"></div>
 
+    <div id="randomSharePanel" class="random-share random-share-panel" aria-label="ガチャ結果を共有" hidden>
+      <p class="random-share-title">結果を共有</p>
+      <div class="random-share-buttons">
+        <a id="shareXBtn" class="share-button share-x" href="#" target="_blank" rel="noopener">Xで投稿</a>
+        <a id="shareBlueskyBtn" class="share-button share-bluesky" href="#" target="_blank" rel="noopener">Blueskyで投稿</a>
+        <button id="webShareBtn" class="share-button share-native" type="button">リンクを共有</button>
+      </div>
+    </div>
+
     <div class="random-actions">
       <button id="drawRandomBtn" class="button" type="button">もう一度ガチャを引く</button>
       <a class="button secondary-button" href="./">一覧へ戻る</a>
@@ -38,6 +57,6 @@
 </main>
 
 <footer class="footer">© nyaruru</footer>
-<script src="js/random.js?v=random-fix-20260706"></script>
+<script src="js/random.js?v=share-gh-20260706-4"></script>
 </body>
 </html>
