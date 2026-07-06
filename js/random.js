@@ -193,7 +193,7 @@ function bindShareButtons(root, c){
 function buildShareText(c){
   const name = c?.name || 'キャラクター';
   const tagText = SITE_SHARE_TAGS.map(tag => `#${tag}`).join(' ');
-  return `${tagText}\nランダムガチャで「${name}」が出ました！\n\nアイコンサイトはコチラ↓↓↓\n`;
+  return `${tagText}\nランダムガチャで「${name}」が出ました！\n\nアイコンサイトはコチラ↓↓↓\n `;
 }
 
 function getShareUrl(c){
