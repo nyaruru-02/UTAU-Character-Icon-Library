@@ -2549,26 +2549,3 @@ select,.search-box input{
     aspect-ratio:1 / 1;
   }
 }
-
-
-/* GitHub Pages stable random share panel */
-.random-share-panel{
-  width:min(980px, calc(100vw - 112px));
-  max-width:100%;
-  margin:18px auto 0;
-  padding:16px;
-  border:1px solid var(--line);
-  border-radius:18px;
-  background:#fff;
-  box-shadow:0 12px 28px rgba(18,38,63,.08);
-}
-
-.random-share-panel[hidden]{
-  display:none !important;
-}
-
-@media (max-width:900px){
-  .random-share-panel{
-    width:100%;
-  }
-}
