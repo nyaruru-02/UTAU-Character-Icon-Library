@@ -596,7 +596,7 @@ function getCharacterColumnCount(){
 function getCharacterPageSize(){
   const columns = getCharacterColumnCount();
   lastGridColumnCount = columns;
-  return Math.max(columns * 3, 1);
+  return Math.max(columns * 4, 1);
 }
 
 function refreshCharacterVisibleCountOnResize(){
