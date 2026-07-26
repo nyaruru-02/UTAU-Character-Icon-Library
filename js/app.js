@@ -16,8 +16,10 @@ const TAG_FILTER_GROUPS = [
   { key:'species', field:'speciesTags', title:'種族タグ' },
   { key:'motif', field:'motifTags', title:'モチーフタグ' },
   { key:'point', field:'pointTags', title:'身体的特徴タグ' },
-  { key:'item', field:'itemTags', title:'小物タグ' },
-  { key:'job', field:'jobTags', title:'職業タグ' }
+  { key:'job', field:'jobTags', title:'職業タグ' },
+  { key:'attribute', field:'attributeTags', title:'属性タグ' },
+  { key:'item', field:'itemTags', title:'小物タグ' }
+  
 ];
 function getFilterGroupKeys(){
   return TAG_FILTER_GROUPS.map(group => group.key);
@@ -76,16 +78,18 @@ async function loadCharacters(){
 }
 
 function normalizeCharacter(row, index){
-  const speciesTags = collectTagsFromFields(row, ['speciesTags','species_tags','SpeciesTags','raceTags','race_tags','種族タグ','種族']);
-  const jobTags = collectTagsFromFields(row, ['jobTags','job_tags','JobTags','occupationTags','occupation_tags','職業タグ','職業']);
-  const itemTags = collectTagsFromFields(row, ['itemTags','item_tags','ItemTags','accessoryTags','accessory_tags','小物タグ','小物']);
-  const motifTags = collectTagsFromFields(row, ['motifTags','motif_tags','MotifTags','themeTags','theme_tags','モチーフタグ','モチーフ']);
-  const pointTags = collectTagsFromFields(row, ['pointTags','point_tags','PointTags','featureTags','feature_tags','onePointTags','one_point_tags','ワンポイントタグ','特徴タグ','特徴']);
-  const normalTags = collectTagsFromFields(row, ['tags','tag','Tags','Tag','characterTags','character_tags','normalTags','normal_tags','タグ','通常タグ']);
-  const categoryTags = uniqueTags([...speciesTags, ...motifTags, ...jobTags, ...itemTags, ...pointTags]);
+  const speciesTags = collectTagsFromFields(row, ['種族タグ']);
+  const jobTags = collectTagsFromFields(row, ['職業タグ']);
+  const attributeTags = collectTagsFromFields(row, ['属性タグ']);
+  const itemTags = collectTagsFromFields(row, ['小物タグ']);
+  const motifTags = collectTagsFromFields(row, ['モチーフタグ']);
+  const pointTags = collectTagsFromFields(row, ['身体的特徴タグ', 'ワンポイントタグ', 'pointTags']);
+  const normalTags = collectTagsFromFields(row, ['通常タグ']);
+  const categoryTags = uniqueTags([...speciesTags, ...attributeTags, ...motifTags, ...jobTags, ...itemTags, ...pointTags]);
   const allCharacterTags = uniqueTags([...normalTags, ...categoryTags]);
-  const gender = normalizeTextValue(firstValue(row, ['gender','Gender','genderTag','gender_tag','GenderTag','sex','Sex','性別','性別タグ'])) || '';
-  const genderTags = gender ? [gender] : [];
+  const gender = normalizeTextValue(firstValue(row, ['性別', 'gender', 'Gender'])) || '';
+  const directGenderTags = collectTagsFromFields(row, ['genderTags']);
+  const genderTags = uniqueTags([...(gender ? [gender] : []), ...directGenderTags]);
 
   return {
     id: firstValue(row, ['id','ID','Id','no','No','番号']) || String(index + 1),
@@ -98,12 +102,13 @@ function normalizeCharacter(row, index){
     url: firstValue(row, ['url','URL','link','Link','リンク']) || '',
     tags: allCharacterTags,
     speciesTags,
+    attributeTags,
     motifTags,
     jobTags,
     itemTags,
     pointTags,
     categoryTags,
-    workTags: collectTagsFromFields(row, ['workTags','worktags','work_tags','WorkTags','works','work','series','seriesTags','series_tags','作品タグ','作品','シリーズ']),
+    workTags: collectTagsFromFields(row, ['作品タグ']),
     createdAt: firstValue(row, ['createdAt','created_at','date','登録日','作成日']) || ''
   };
 }
