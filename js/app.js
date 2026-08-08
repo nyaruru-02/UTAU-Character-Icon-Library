@@ -108,7 +108,7 @@ function normalizeCharacter(row, index){
     itemTags,
     pointTags,
     categoryTags,
-    workTags: collectTagsFromFields(row, ['作品タグ']),
+    workTags: collectTagsFromFields(row, ['作品タグ', 'workTags', 'work_tags', 'workTag']),
     createdAt: firstValue(row, ['createdAt','created_at','date','登録日','作成日']) || ''
   };
 }
