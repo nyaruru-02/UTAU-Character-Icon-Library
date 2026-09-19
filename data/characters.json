@@ -4462,5 +4462,53 @@
     "職業タグ": "治安",
     "小物タグ": "髪飾り|装身具",
     "身体的特徴タグ": "目隠れ|傷・痕"
+  },
+  {
+    "id": 280,
+    "name": "枇々木アマネ",
+    "kana": "ひびき あまね",
+    "romaji": "Hibiki Amane",
+    "icon": "image/hibiki-amane.png",
+    "url": "https://sites.google.com/view/arcobaleno-utau/home",
+    "workTags": "枇々木アマネ(UTAU)",
+    "gender": "女性",
+    "種族タグ": "",
+    "モチーフタグ": "",
+    "属性タグ": "",
+    "職業タグ": "",
+    "小物タグ": "耳装備",
+    "身体的特徴タグ": ""
+  },
+  {
+    "id": 281,
+    "name": "笹川トシオ",
+    "kana": "ささがわ としお",
+    "romaji": "Sasagawa Toshio",
+    "icon": "image/sasagawa-toshio.png",
+    "url": "https://toshio-utau.jimdofree.com",
+    "workTags": "笹川トシオ(UTAU)",
+    "gender": "男性",
+    "種族タグ": "人型",
+    "モチーフタグ": "哺乳類",
+    "属性タグ": "ツンデレ",
+    "職業タグ": "",
+    "小物タグ": "耳装備",
+    "身体的特徴タグ": "耳|尻尾"
+  },
+  {
+    "id": 282,
+    "name": "鳴音カズヒコ",
+    "kana": "なるね かずひこ",
+    "romaji": "Narune Kazuhiko",
+    "icon": "image/narune-kazuhiko.png",
+    "url": "https://bellsworks.wixsite.com/bellsworks",
+    "workTags": "#べるずわーくす",
+    "gender": "男性",
+    "種族タグ": "人間",
+    "モチーフタグ": "機械・道具",
+    "属性タグ": "",
+    "職業タグ": "",
+    "小物タグ": "髪飾り",
+    "身体的特徴タグ": ""
   }
 ]
