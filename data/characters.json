@@ -4510,5 +4510,53 @@
     "職業タグ": "",
     "小物タグ": "髪飾り",
     "身体的特徴タグ": ""
+  },
+  {
+    "id": 283,
+    "name": "諸葛美娜",
+    "kana": "じぇがる みな",
+    "romaji": "Jegal Mina",
+    "icon": "image/jegal-mina.png",
+    "url": "https://magnawitch.wixsite.com/seong-ah",
+    "workTags": "#Mina_UTAU",
+    "gender": "その他",
+    "種族タグ": "人間",
+    "モチーフタグ": "",
+    "属性タグ": "",
+    "職業タグ": "教育",
+    "小物タグ": "眼部|耳装備",
+    "身体的特徴タグ": "眉|目"
+  },
+  {
+    "id": 284,
+    "name": "詠音カーデ",
+    "kana": "えいと かーで",
+    "romaji": "Eito Qade",
+    "icon": "image/eito-qade.png",
+    "url": "https://bellsworks.wixsite.com/bellsworks",
+    "workTags": "#べるずわーくす",
+    "gender": "男性",
+    "種族タグ": "人間",
+    "モチーフタグ": "架空生物",
+    "属性タグ": "",
+    "職業タグ": "舞台・パフォーマンス",
+    "小物タグ": "",
+    "身体的特徴タグ": "目|耳|口元"
+  },
+  {
+    "id": 285,
+    "name": "諸葛娜詰",
+    "kana": "じぇがる なひ",
+    "romaji": "Jegal Nahui",
+    "icon": "image/jegal-nahui.png",
+    "url": "https://magnawitch.wixsite.com/seong-ah",
+    "workTags": "#Nahui_UTAU",
+    "gender": "無性別",
+    "種族タグ": "人間",
+    "モチーフタグ": "機械・道具",
+    "属性タグ": "",
+    "職業タグ": "教育",
+    "小物タグ": "眼部|耳装備",
+    "身体的特徴タグ": "髪色|眉|目|模様・装飾"
   }
 ]
