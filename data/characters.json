@@ -4574,5 +4574,37 @@
     "職業タグ": "接客・販売",
     "小物タグ": "髪飾り",
     "身体的特徴タグ": "眉"
+  },
+  {
+    "id": 287,
+    "name": "かたづたか",
+    "kana": "かたづ たか",
+    "romaji": "Katazu Taka",
+    "icon": "image/katazu-taka.png",
+    "url": "https://lclcofficial6565.wixsite.com/lclc",
+    "workTags": "#LCLCみてみて",
+    "gender": "男性",
+    "種族タグ": "バーチャル",
+    "モチーフタグ": "",
+    "属性タグ": "",
+    "職業タグ": "教育",
+    "小物タグ": "",
+    "身体的特徴タグ": "髪型|目"
+  },
+  {
+    "id": 288,
+    "name": "鳩音ぼん太",
+    "kana": "はとね ぼんた",
+    "romaji": "Hatone Bonta",
+    "icon": "image/hatone-bonta.png",
+    "url": "https://hatonosuke5.booth.pm",
+    "workTags": "#ボタン太の子|#UTAU鳩音ぼん太",
+    "gender": "男性",
+    "種族タグ": "人間",
+    "モチーフタグ": "鳥類",
+    "属性タグ": "",
+    "職業タグ": "",
+    "小物タグ": "",
+    "身体的特徴タグ": "脚・足"
   }
 ]
