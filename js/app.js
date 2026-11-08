@@ -40,6 +40,7 @@ init();
 async function init(){
   try{
     characters = await loadCharacters();
+    window.iconSiteCharacters = characters;
     renderKanaNav();
     renderTags();
     bindEvents();
@@ -480,7 +481,7 @@ function renderCharacters(list){
 
   root.innerHTML = visibleList.map(c => `
     <article class="character-card">
-      <img src="${escapeAttr(getIconSrc(c))}" alt="${escapeAttr(c.name)}のアイコン" loading="lazy" onerror="this.onerror=null;this.src='${escapeAttr(getFallbackIcon(c))}';">
+      <img data-pet-detail="${escapeAttr(c.id)}" tabindex="0" role="button" src="${escapeAttr(getIconSrc(c))}" alt="${escapeAttr(c.name)}のアイコン" loading="lazy" onerror="this.onerror=null;this.src='${escapeAttr(getFallbackIcon(c))}';">
       <div class="card-body">
         <h3 class="character-name">${escapeHtml(c.name)}</h3>
         <p class="reading1">${escapeHtml(c.kana)}</p>
