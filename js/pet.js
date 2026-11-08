@@ -22,6 +22,7 @@
   function remove() { cancelAnimationFrame(state.swayFrame); clearTimeout(state.blinkTimer); clearTimeout(state.actionTimer); clearTimeout(state.clickTimer); state.node?.remove(); state.node=null; state.pet=null; try { localStorage.removeItem('iconSitePet'); } catch {} }
   async function mount(data) {
     remove();
+    try { localStorage.removeItem('iconSitePetDismissed'); } catch {}
     if (!data?.folder || !(await exists(file(data.folder,'body'))) || !(await exists(file(data.folder,'head1')))) return;
     state.pet=data;
     const el=document.createElement('div'); el.className='site-pet'; el.dataset.action='idle';
@@ -75,7 +76,7 @@
     const size=()=>el.getBoundingClientRect();
     const place=(x,y)=>{const b=size(); el.style.left=`${Math.max(0,Math.min(innerWidth-b.width,x))}px`; el.style.top=`${Math.max(0,Math.min(innerHeight-b.height,y))}px`; el.style.right='auto';el.style.bottom='auto';};
     place(position?.x ?? innerWidth-190,position?.y ?? innerHeight-210);
-    el.querySelector('.pet-close').addEventListener('click', e=>{e.stopPropagation();remove();});
+    el.querySelector('.pet-close').addEventListener('click', e=>{e.stopPropagation();remove();save('iconSitePetDismissed',true);});
     const fig=el.querySelector('.pet-figure');
     const headZone=(e)=>{const b=fig.getBoundingClientRect();return e.clientX>=b.left+b.width*.22 && e.clientX<=b.left+b.width*.78 && e.clientY>=b.top+b.height*.12 && e.clientY<=b.top+b.height*.64;};
     fig.addEventListener('pointerdown', e=>{
@@ -203,7 +204,9 @@
     dlg.addEventListener('close',()=>dlg.remove(),{once:true});dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();});dlg.showModal();
   }
   document.addEventListener('DOMContentLoaded',()=>{
-    const previous=stored('iconSitePet');if(previous?.folder)mount(previous);
+    const previous=stored('iconSitePet');
+    if(previous?.folder) mount(previous);
+    else if(!stored('iconSitePetDismissed')) mount({folder:'kiraboshi-waku',name:'輝星惑'});
     document.querySelector('#characterList')?.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ') && e.target.matches('img[data-pet-detail]')){e.preventDefault();e.target.click();}});
     document.querySelector('#characterList')?.addEventListener('click',e=>{
       const trigger=e.target.closest('[data-pet-detail]');if(!trigger)return;
