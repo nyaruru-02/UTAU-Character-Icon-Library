@@ -1,21 +1,5 @@
 [
   {
-    "id": "#VALUE!",
-    "name": "#VALUE!",
-    "kana": "#VALUE!",
-    "romaji": "#VALUE!",
-    "icon": "#VALUE!",
-    "url": "#VALUE!",
-    "workTags": "#VALUE!",
-    "gender": "#VALUE!",
-    "種族タグ": "#VALUE!",
-    "モチーフタグ": "#VALUE!",
-    "属性タグ": "#VALUE!",
-    "職業タグ": "#VALUE!",
-    "小物タグ": "#VALUE!",
-    "身体的特徴タグ": "#VALUE!"
-  },
-  {
     "id": 1,
     "name": "赤鐘芙蓉",
     "kana": "あかがね ふよう",
