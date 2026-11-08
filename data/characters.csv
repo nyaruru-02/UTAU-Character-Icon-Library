@@ -1,4 +1,5 @@
 ﻿id,name,kana,romaji,icon,url,workTags,gender,種族タグ,モチーフタグ,属性タグ,職業タグ,小物タグ,身体的特徴タグ
+#VALUE!,#VALUE!,#VALUE!,#VALUE!,#VALUE!,#VALUE!,#VALUE!,#VALUE!,#VALUE!,#VALUE!,#VALUE!,#VALUE!,#VALUE!,#VALUE!
 1,赤鐘芙蓉,あかがね ふよう,Akagane Fuyo,image/akagane-fuyo.png,https://mitoristu.wixsite.com/kousaibako,#虹彩箱,女性,鬼,,,,,耳
 2,東屋亭久一,あずまやてい きゅういち,Azumayatei Kyuichi,image/azumayatei-kyuichi.png,https://sereinrain113.wixsite.com/999sereinrain,#東屋でお茶でも,男性,人間,,,科学・技術,眼部,髪色|目隠れ
 3,アセテート,あせてーと,Acetate,image/acetate.png,https://cloudcatch1224.wixsite.com/godsfoot,#神様の足元,男性,人間|機械,ドラゴン,,科学・技術,,角(つの)|翼|尻尾
@@ -287,3 +288,4 @@
 286,やしろしや,やしろ しや,Yashiro Shiya,image/yashiro-shiya.png,https://lclcofficial6565.wixsite.com/lclc,#LCLCみてみて,女性,バーチャル,,,接客・販売,髪飾り,眉
 287,かたづたか,かたづ たか,Katazu Taka,image/katazu-taka.png,https://lclcofficial6565.wixsite.com/lclc,#LCLCみてみて,男性,バーチャル,,,教育,,髪型|目
 288,鳩音ぼん太,はとね ぼんた,Hatone Bonta,image/hatone-bonta.png,https://hatonosuke5.booth.pm,#ボタン太の子|#UTAU鳩音ぼん太,男性,人間,鳥類,,,,脚・足
+289,あまんだ,あまんだ,Amanda,image/amanda.png,https://hatonosuke5.booth.pm,#ボタン太の子|#UTAUあまんだ,女性,人型,哺乳類,,,服飾,耳|尻尾|脚・足

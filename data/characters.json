@@ -1,5 +1,21 @@
 [
   {
+    "id": "#VALUE!",
+    "name": "#VALUE!",
+    "kana": "#VALUE!",
+    "romaji": "#VALUE!",
+    "icon": "#VALUE!",
+    "url": "#VALUE!",
+    "workTags": "#VALUE!",
+    "gender": "#VALUE!",
+    "種族タグ": "#VALUE!",
+    "モチーフタグ": "#VALUE!",
+    "属性タグ": "#VALUE!",
+    "職業タグ": "#VALUE!",
+    "小物タグ": "#VALUE!",
+    "身体的特徴タグ": "#VALUE!"
+  },
+  {
     "id": 1,
     "name": "赤鐘芙蓉",
     "kana": "あかがね ふよう",
@@ -4606,5 +4622,21 @@
     "職業タグ": "",
     "小物タグ": "",
     "身体的特徴タグ": "脚・足"
+  },
+  {
+    "id": 289,
+    "name": "あまんだ",
+    "kana": "あまんだ",
+    "romaji": "Amanda",
+    "icon": "image/amanda.png",
+    "url": "https://hatonosuke5.booth.pm",
+    "workTags": "#ボタン太の子|#UTAUあまんだ",
+    "gender": "女性",
+    "種族タグ": "人型",
+    "モチーフタグ": "哺乳類",
+    "属性タグ": "",
+    "職業タグ": "",
+    "小物タグ": "服飾",
+    "身体的特徴タグ": "耳|尻尾|脚・足"
   }
 ]
