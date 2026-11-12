@@ -1527,3 +1527,34 @@ body.tutorial-active #tearHandle.tutorial-target,body.tutorial-active #tearHandl
 }
 .shop-layout-v48 .pack-purchase-box>div{flex:0 0 auto!important;text-align:center!important}
 .shop-layout-v48 .pack-purchase-box>button{flex:0 0 54px!important;margin:12px auto 0!important}
+
+/* v74: tutorial callout proximity, tablet collection pager, tap highlight */
+.game-tutorial .tutorial-bubble.tutorial-upgrade-bubble::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-13px;
+  transform:translateX(-50%);
+  width:0;height:0;
+  border-left:13px solid transparent;
+  border-right:13px solid transparent;
+  border-top:13px solid #fff;
+  filter:drop-shadow(0 2px 0 rgba(116,103,204,.22));
+}
+.tap-note{
+  -webkit-tap-highlight-color:transparent!important;
+  -webkit-touch-callout:none;
+  outline:none;
+}
+.tap-note:focus:not(:focus-visible){outline:none!important;box-shadow:none!important}
+.tap-note:focus-visible{outline:3px solid rgba(255,255,255,.95)!important;outline-offset:5px!important}
+@media (min-width:700px) and (max-width:1366px) and (orientation:landscape){
+  .book-wrap{padding-bottom:48px!important;align-items:flex-start!important;padding-top:12px!important}
+  .book{height:min(610px,calc(100vh - 150px))!important;min-height:430px!important}
+  .pager{bottom:2px!important}
+}
+@media (min-width:700px) and (max-width:1180px) and (orientation:landscape){
+  .book-wrap{padding-bottom:42px!important;padding-top:8px!important}
+  .book{height:calc(100vh - 142px)!important;min-height:400px!important}
+  .pager{bottom:0!important}
+}
