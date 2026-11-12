@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>UTAU Icon Collection</title>
+  <link rel="stylesheet" href="css/game.css?v=73">
+  <script>if(window.matchMedia('(max-width:699px)').matches){document.documentElement.classList.add('game-mobile-blocked')}</script>
+</head>
+<body>
+<div class="mobile-game-block"><div><b>PC・タブレット専用ゲームです</b><p>アイコンコレクションは、PCまたはタブレットからお楽しみください。</p><a href="play.html">遊ぶページへ戻る</a></div></div>
+<header class="ghead">
+  <a class="gbrand" href="index.html"><img src="assets/game/note.svg" alt=""><b>UTAU Icon Collection</b></a>
+  <div class="wallet">
+    <button id="walletNotes" class="wallet-pill" type="button" aria-label="ショップへ"><img src="assets/game/note.svg" alt=""><b id="notes">0</b><i>＋</i></button>
+    <button id="walletPoints" class="wallet-pill" type="button" aria-label="コイン回収へ"><span class="point-mark" aria-hidden="true">P</span><b id="points">0</b><i>＋</i></button>
+  </div>
+</header>
+
+<main class="game-shell">
+  <aside class="sidebar" id="sidebar">
+    <button class="side-home active" data-go="home"><span class="side-icon"><img src="assets/game/home.svg" alt=""></span>ホーム</button>
+    <div class="side-stat"><span class="side-icon"><img src="assets/game/note.svg" alt=""></span><span>所持音符</span><b id="sideNotes">0</b></div>
+    <div class="side-stat"><span class="side-icon"><img src="assets/game/pack.svg" alt=""></span><span>所持パック</span><b id="sidePacks">0</b></div>
+    <div class="side-stat"><span class="side-icon"><img src="assets/game/book.svg" alt=""></span><span>収集率</span><b id="sideRate">0%</b></div>
+    <div class="bar"><i id="rateBar"></i></div>
+    <button class="reset-game-home" type="button">はじめから</button><a class="site-back" href="index.html">アイコンサイトに戻る</a>
+  </aside>
+
+  <section id="home" class="view active home-view">
+    <div class="home-actions">
+      <button data-go="pack" class="action">
+        <span class="action-icon"><img src="assets/game/png/icon-card.png" alt=""></span>
+        <b>パックを開ける</b><small>カードパックを開封</small>
+      </button>
+      <button data-go="collection" class="action">
+        <span class="action-icon"><img src="assets/game/png/icon-collection.png" alt=""></span>
+        <b>コレクションを見る</b><small>集めたカードを整理</small>
+      </button>
+      <button data-go="shop" class="action">
+        <span class="action-icon"><img src="assets/game/png/icon-shop.png" alt=""></span>
+        <b>ショップへ行く</b><small>パック購入・ポイント交換</small>
+      </button>
+    </div>
+  </section>
+
+  <section id="pack" class="view pack-view">
+    <button class="skip" data-go="home">ホームへ戻る</button>
+    <div class="pack-center">
+      <div id="packSelector" class="pack-selector"></div>
+      <div id="tearHandle" class="tear-handle" aria-label="横にドラッグしてパックを開ける">
+        <div class="pack-visual">
+          <img class="pack-base" src="assets/game/png/open-pack-3.png" alt="カードパック">
+          <img class="pack-top" src="assets/game/png/open-pack-3.png" alt="" aria-hidden="true">
+          <span class="cut-progress"></span>
+        </div>
+      </div>
+      <div class="drag-hint"><span class="mouse-mark"></span><b>横にドラッグしてパックを開ける</b><span class="drag-arrow">→</span></div>
+      <div id="packEmpty" class="pack-empty" hidden>
+        <h2>パックを所持していません</h2>
+        <p>ショップへ行ってカードパックを購入してください。</p>
+        <div class="empty-actions"><button data-go="shop">ショップへ行く</button><button data-go="collection">コレクションを見る</button></div>
+      </div>
+    </div>
+    <div id="reveal" class="reveal" hidden>
+      <h2>開封結果</h2>
+      <div id="revealCards"></div>
+      <p>新しいカードはコレクションの該当No.に収めてください。</p>
+      <div id="revealActions"><button id="again">もう一度開ける</button><button data-go="collection">コレクションへ</button></div>
+    </div>
+  </section>
+
+  <section id="collection" class="view collection-view">
+    <aside class="collection-menu">
+      <button data-go="home" class="back-home"><span class="side-icon"><img src="assets/game/home.svg" alt=""></span>ホーム</button>
+      <h2>コレクション</h2>
+      <label><input type="checkbox" id="ownedOnly">入手済みのみ</label>
+      <label><input type="checkbox" id="missingOnly">未入手のみ</label>
+      
+      <div class="collect-title"><span class="side-icon small"><img src="assets/game/book.svg" alt=""></span>収集率</div>
+      <div class="ring" id="ring"><b id="ringRate">0%</b></div>
+      <strong id="collectCount">0 / 0</strong>
+      <div class="missing-preview" aria-label="未収納カード"><div class="slot empty"><b>未収納</b></div></div>
+    </aside>
+    <div class="book-wrap">
+      <div class="book">
+        <div class="book-top"><b id="range">No.001 ～ No.012</b><strong id="bookCount">0 / 0 枚</strong></div>
+        <div id="slots" class="slots"></div>
+        <span class="spine"></span><span class="ribbon r1"></span><span class="ribbon r2"></span>
+      </div>
+      <div class="pager"><button id="first"><img src="assets/game/png/page-first.png" alt="最初のページ"></button><button id="prev10"><img src="assets/game/png/page-prev.png" alt="10ページ戻る"></button><button id="prev2"><img src="assets/game/png/page-prev-single.png" alt="前のページ"></button><span id="pageText">1 / 1 ページ</span><button id="next2"><img src="assets/game/png/page-next-single.png" alt="次のページ"></button><button id="next10"><img src="assets/game/png/page-next.png" alt="10ページ進む"></button><button id="last"><img src="assets/game/png/page-last.png" alt="最後のページ"></button></div>
+    </div>
+  </section>
+
+  <section id="shop" class="view shop-view">
+    <aside class="shop-menu">
+      <button data-go="home" class="back-home"><span class="side-icon"><img src="assets/game/home.svg" alt=""></span>ホーム</button>
+      <h2>ショップ</h2>
+      <div class="side-stat"><span class="side-icon"><img src="assets/game/note.svg" alt=""></span><span>所持音符</span><b id="shopNotes">0</b></div>
+      <div class="side-stat"><span class="side-icon"><img src="assets/game/pack.svg" alt=""></span><span>所持パック</span><b id="shopPacks">0</b></div>
+      <div class="collect-title"><span class="side-icon small"><img src="assets/game/book.svg" alt=""></span>収集率</div>
+      <div class="shop-rate"><b id="shopRate">0%</b><span><i id="shopRateBar"></i></span></div>
+    </aside>
+    <div class="shop-main shop-layout-v48">
+      <section class="shop-pack-area">
+        <div class="shop-heading"><h1><img class="shop-title-icon" src="assets/game/png/shop.png" alt="">ショップ</h1><p>カードパックの購入や、ポイントの強化ができます</p></div>
+        <div id="packBuyCards" class="pack-buy-cards"></div>
+      </section>
+      <section class="collector-upgrades">
+        <h2>✦ アップグレード</h2>
+        <div class="upgrade-grid">
+          <div class="upgrade-card"><img class="upgrade-icon" src="assets/game/png/coin-speed.png" alt=""><h3>コイン回収スピード</h3><p>ポイントがたまる速さを上げます</p><b id="speedLevelText">Lv.1 → Lv.2</b><small id="speedEffectText">10秒 → 8秒で1P</small><button id="speedUpgrade"><span class="point-mark">P</span><span id="speedUpgradeCost">150</span></button></div>
+          <div class="upgrade-card"><img class="upgrade-icon" src="assets/game/png/coin-get.png" alt=""><h3>コイン獲得量</h3><p>1回のタップで回収する量を増やします</p><b id="tapLevelText">Lv.1 → Lv.2</b><small id="tapEffectText">1P → 2P</small><button id="tapUpgrade"><span class="point-mark">P</span><span id="tapUpgradeCost">200</span></button></div>
+          <div class="upgrade-card pack-unlock-card"><img class="upgrade-icon" src="assets/game/png/icon-upgrade.png" alt=""><h3>パックをアップグレード</h3><p id="upgradeDescription">5枚入りパックを解放</p><button id="upgrade"><span class="point-mark">P</span><span id="upgradeCost">100</span></button></div>
+          <div class="upgrade-card exchange-card"><img class="upgrade-icon" src="assets/game/png/icon-point-to-note-v14.png" alt=""><h3>ポイントを音符に交換</h3><p>100ポイント → 100音符</p><button id="exchange">交換する</button></div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <section id="coin" class="view coin-view">
+    <aside class="coin-menu">
+      <button data-go="home" class="back-home"><span class="side-icon"><img src="assets/game/home.svg" alt=""></span>ホーム</button>
+      <h2>コイン回収</h2>
+      <div class="side-stat"><span class="side-icon"><img src="assets/game/note.svg" alt=""></span><span>所持音符</span><b id="coinNotes">0</b></div>
+      <div class="side-stat"><span class="side-icon"><img src="assets/game/pack.svg" alt=""></span><span>所持パック</span><b id="coinPacks">0</b></div>
+    </aside>
+    <div class="coin-main">
+      <div class="coin-collector">
+        <h1><span class="point-mark">P</span> コイン回収</h1>
+        <p class="collector-lead">たまったポイントを音符をタップして回収しましょう！</p>
+        <div class="collector-stats"><div><span>未回収ポイント</span><b><span class="point-mark">P</span><em id="bankedPoints">0</em></b></div><div><span>現在のポイント</span><b><span class="point-mark">P</span><em id="collectorCurrentPoints">0</em></b></div></div>
+        <button id="tapNote" class="tap-note" type="button"><img src="assets/game/png/collector-note.png" alt="ポイントを回収する音符"></button>
+      </div>
+    </div>
+  </section>
+
+</main>
+<div id="cardDetailModal" class="card-detail-modal" aria-hidden="true">
+  <div class="card-detail-panel">
+    <button id="cardDetailClose" class="card-detail-close" type="button" aria-label="閉じる">×</button>
+    <img id="cardDetailImage" alt="">
+    <div class="card-detail-copy">
+      <small id="cardDetailNo"></small>
+      <h2 id="cardDetailName">キャラクター情報</h2>
+      <p id="cardDetailKana"></p><p id="cardDetailRomaji"></p>
+      <div id="cardDetailTags" class="card-detail-tags"></div>
+      <a id="cardDetailLink" target="_blank" rel="noopener">管理サイトを見る</a>
+    </div>
+  </div>
+</div>
+<div id="resetModal" class="reset-modal" hidden><div class="reset-panel"><h2>ゲームをはじめからやり直しますか？</h2><p>コレクション記録、所持ポイント・音符・パック、パックのアップグレード状態を初期状態に戻します。</p><div><button id="resetCancel">キャンセル</button><button id="resetConfirm" class="danger">はじめからやり直す</button></div></div></div><div id="toast" class="toast"></div>
+<script src="js/game.js?v=73"></script>
+</body>
+</html>
