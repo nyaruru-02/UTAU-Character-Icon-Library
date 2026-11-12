@@ -1558,3 +1558,17 @@ body.tutorial-active #tearHandle.tutorial-target,body.tutorial-active #tearHandl
   .book{height:calc(100vh - 142px)!important;min-height:400px!important}
   .pager{bottom:0!important}
 }
+
+/* v75: use the actually visible browser viewport (iPad/tablet browser chrome excluded). */
+:root{--game-vh:100dvh;--game-visible-h:100dvh}
+html,body{height:auto;min-height:100%}
+.game-shell{height:calc(var(--game-visible-h) - 76px)!important;min-height:0!important}
+.pack-view.active{height:var(--game-visible-h)!important;min-height:0!important}
+.book{max-height:calc(var(--game-visible-h) - 135px)!important}
+@media(max-height:800px){.book{height:calc(var(--game-visible-h) - 100px)!important}}
+@media (min-width:700px) and (max-width:1366px) and (orientation:landscape){
+  .book{height:min(610px,calc(var(--game-visible-h) - 150px))!important;max-height:calc(var(--game-visible-h) - 150px)!important}
+}
+@media (min-width:700px) and (max-width:1180px) and (orientation:landscape){
+  .book{height:calc(var(--game-visible-h) - 142px)!important;max-height:calc(var(--game-visible-h) - 142px)!important}
+}

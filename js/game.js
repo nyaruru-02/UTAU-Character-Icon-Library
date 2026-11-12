@@ -179,3 +179,21 @@ function hardResetGame(){
 document.getElementById('resetConfirm')?.addEventListener('click',(e)=>{e.preventDefault();hardResetGame();resetModal.hidden=true;document.getElementById('ownedOnly').checked=false;document.getElementById('missingOnly').checked=false;status();render();renderPackSelector();updatePackState();resetTear();go('home');toast('ゲームデータを初期状態に戻しました')});
 
 window.addEventListener('resize',()=>{if(tutorialActive){const t=$('.tutorial-target');if(t){if(tutorialStep==='upgrade')positionTutorialBubbleTop();else positionTutorialBubble(t)}}});
+
+// v75: size the game from the visible viewport, excluding tablet browser chrome.
+(function syncVisibleGameViewport(){
+  const root=document.documentElement;
+  const apply=()=>{
+    const vv=window.visualViewport;
+    const h=Math.round(vv&&vv.height?vv.height:window.innerHeight);
+    root.style.setProperty('--game-visible-h',h+'px');
+    root.style.setProperty('--game-vh',(h/100)+'px');
+  };
+  apply();
+  window.addEventListener('resize',apply,{passive:true});
+  window.addEventListener('orientationchange',()=>setTimeout(apply,80),{passive:true});
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize',apply,{passive:true});
+    window.visualViewport.addEventListener('scroll',apply,{passive:true});
+  }
+})();
